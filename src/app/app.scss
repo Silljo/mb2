@@ -14,3 +14,78 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+.user_photo_izbornik
+{
+  border-radius: 50%;
+  background-color: red;
+}
+
+.div_user_photo_izbornik
+{
+  margin-top: 15%;
+  text-align: center;
+}
+
+.username_icon
+{
+  padding-top: 20px;
+  font-size: 20px;
+}
+
+ion-menu{
+ ion-content{
+  background-color:lightblue !important;
+ }
+}
+
+.menu_list
+{
+  margin-top: 15%;
+
+  .item{
+    background-color: transparent;
+    border-color: pink;
+
+    .item-inner {
+      border-bottom: 0px solid #ccc;
+      border-bottom-left-radius: 50px;
+    }
+  }
+}
+
+.menu_button
+{
+  margin-top: -15px;
+}
+
+.menu_icon_div
+{
+  zoom:200%;
+  margin-left: 5px;
+}
+
+//Tekst izbornika span
+.menu_tekst
+{
+  padding-bottom: 5px;
+  margin-top: 10px;
+  margin-left: 50px;
+  position: absolute;
+  zoom: 40%;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+
+.no_padding
+{
+  padding: 0px !important;
+}
+
+.link
+{
+  text-decoration: none;
+  color: inherit;
+}

@@ -1,0 +1,49 @@
+page-smjestaj {
+
+  .main_row
+  {
+    margin-top: 2%;
+  }
+
+  .smjestaj_cols
+  {
+    display: grid;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    max-height: 200px;
+  }
+
+  .naziv_zvjezdice
+  {
+    position:absolute;
+    z-index: 1;
+    background-color: transparent;
+    color: #FFF;
+  }
+
+  .smjestaj_info_grid
+  {
+    text-align: center;
+    background-color: #99b0c2;
+    color: grey;
+  }
+
+  .action_icons_smjestaj
+  {
+
+    font-size: 2.5em;
+    flex-flow: column;
+    text-align: center !important;
+    font-weight: 300;
+    padding-top: 0.5em;
+  }
+
+  .smjestaj_tekst_ikone
+  {
+    display: block !important;
+    font-size: 0.37em !important;
+    line-height: 1em;
+    text-align: center !important;
+    font-weight: 300;
+  }
+}

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Smještaj</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+   <ion-row class="main_row" *ngFor="let smjestaj_items of smjestaj | async">
+
+    <ion-col class="naziv_zvjezdice" col-9>{{smjestaj_items.naziv_objekta}}<br>
+      <span *ngIf="smjestaj_items.zvjezdica == 1"><ion-icon name="star"></ion-icon></span>
+      <span *ngIf="smjestaj_items.zvjezdica == 2"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+      <span *ngIf="smjestaj_items.zvjezdica == 3"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+      <span *ngIf="smjestaj_items.zvjezdica == 4"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+      <span *ngIf="smjestaj_items.zvjezdica == 5"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+    </ion-col>
+
+    <ion-col class="smjestaj_cols no_padding" col-9>
+     <img class="no_padding" src="{{smjestaj_items.slika}}">
+    </ion-col>
+
+    <ion-col col-3 class="smjestaj_cols no_padding smjestaj_info_grid">
+     <ion-icon col-12 class="action_icons_smjestaj" name="ios-information-circle-outline" (click)="detalji_smjestaja(smjestaj_items.id)"><span class="smjestaj_tekst_ikone">info</span></ion-icon>
+     <a col-12 class="link" href="mailto:{{smjestaj_items.email}}?Subject={{smjestaj_items.naziv_objekta}}" target="_top"><ion-icon col-12 class="action_icons_smjestaj" name="ios-at-outline"><span class="smjestaj_tekst_ikone">e-mail</span></ion-icon></a>
+     <a col-12 class="link" href="tel:{{smjestaj_items.kontakt}}"><ion-icon col-12 class="action_icons_smjestaj" name="ios-call-outline"><span class="smjestaj_tekst_ikone">tel/mob</span></ion-icon></a>
+    </ion-col>
+   </ion-row>
+
+ </ion-grid>
+
+</ion-content>
