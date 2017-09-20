@@ -19,6 +19,9 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SmjestajPage } from '../pages/smjestaj/smjestaj';
 
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { Geolocation } from '@ionic-native/geolocation';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -48,7 +51,9 @@ import { SmjestajPage } from '../pages/smjestaj/smjestaj';
     AuthProvider,
     LocalStorageProvider,
     Facebook,
-    StreamingMedia
+    StreamingMedia,
+    LaunchNavigator,
+    Geolocation
   ]
 })
 export class AppModule {}

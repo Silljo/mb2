@@ -1,4 +1,4 @@
-<ion-content class="no_padding" >
+<ion-content class="no_padding content">
 
   <!-- [style.background-image]="'url(' + slika + ')'" -->
   <ion-icon class="icon_back" name="ios-arrow-back" (click) = "close_pop();"></ion-icon>
@@ -6,6 +6,7 @@
   <div class="wraper_div_main" [style.background-image]="'url(' + slika + ')'">
 
     <div class="inner_div">
+
       <div class="galerija_img_div">
         <img class="galerija_image" src ="{{galerija_img}}">
         <div class="galerija_div"><ion-icon class="galerija_icon" name="md-images"></ion-icon></div>
@@ -26,5 +27,68 @@
      </ion-col>
    </ion-row>
   </ion-grid>
+
+  <ion-grid class="grid_ponuda zvijezdice">
+    <ion-row >
+      <ion-col col-12 class="zvijezdice">
+        <span *ngIf="zvjezdica == 1"><ion-icon name="star"></ion-icon></span>
+        <span *ngIf="zvjezdica == 2"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+        <span *ngIf="zvjezdica == 3"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+        <span *ngIf="zvjezdica == 4"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+        <span *ngIf="zvjezdica == 5"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <br>
+  <ion-list>
+    <ion-item-sliding>
+      <ion-item no-lines>
+        <ion-avatar item-start>
+          <ion-icon class="icon_list" name="md-chatboxes"></ion-icon>
+        </ion-avatar>
+        <h2>Kontakt podaci</h2>
+        <h3>Telefon, mobitel, e-mail adresa...</h3>
+        <ion-avatar item-end>
+          <ion-icon class="pull" name="ios-arrow-back"> povuci za detalje</ion-icon>
+        </ion-avatar>
+      </ion-item>
+      <ion-item-options side="right">
+        <a href="tel:{{kontakt_telefon}}" ion-button color="crvena">
+          <ion-icon name="md-call"></ion-icon>
+          Tel/Mob
+        </a>
+        <a href="mailto:{{kontakt_email}}" ion-button color="zelena">
+          <ion-icon name="mail"></ion-icon>
+          &nbsp;E-mail&nbsp;
+        </a>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item no-lines>
+      <ion-avatar item-start>
+        <ion-icon class="icon_list" name="md-time"></ion-icon>
+      </ion-avatar>
+      <h2>Radno vrijeme</h2>
+      <h3>Dani: {{radno_vrijeme_dani}}</h3>
+      <p>Sati: {{radno_vrijeme_sati}} h</p>
+    </ion-item>
+    <ion-item no-lines (click)="nav()">
+      <ion-avatar item-start>
+        <ion-icon class="icon_list" name="md-locate"></ion-icon>
+      </ion-avatar>
+        <h2>Adresa</h2>
+        <h3>{{adresa}}</h3>
+        <p>Za pokretanje navigacije pritisni ovdje</p>
+
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+
+  </ion-list>
+
+  <ion-card>
+    <ion-card-header><ion-icon class="info_icon" name="ios-information-circle"></ion-icon> Osnovne informacije </ion-card-header>
+    <ion-card-content>{{opis}}</ion-card-content>
+  </ion-card>
 
 </ion-content>
