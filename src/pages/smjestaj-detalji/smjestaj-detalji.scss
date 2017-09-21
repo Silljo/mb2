@@ -16,30 +16,18 @@ page-smjestaj-detalji {
     background-repeat: no-repeat;
     background-position: center right;
     background-size: cover;
-    color: #FFF;
-
   }
 
-  .inner_div {
+  .inner_div
+  {
   	position: absolute;
   	top: 286px;
   	width: 100%;
     height: 114px;
-  	box-sizing: border-box;
   	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   	font: 150%/1.6 sans-serif;
   	text-align: center;
     padding-top: 20px;
-
-  }
-
-  .inner_div:after {
-
-  	position: absolute;
-  	top: 0; right: 0; bottom: 0; left: 0;
-  	z-index: -1;
-  	border-radius:inherit;
-  	-webkit-filter: blur(4px);
   }
 
   .smjestaj_naziv
@@ -49,7 +37,6 @@ page-smjestaj-detalji {
     display: block;
     padding-top: 25px;
     color: #F7A54B;
-
   }
 
   .adresa
@@ -61,13 +48,11 @@ page-smjestaj-detalji {
 
   .grid_ponuda
   {
-
     background-color: #DDD;
   }
 
   .ponuda_ikone
   {
-
     line-height: 2em;
     font-size: 2em;
     color: #EEE
@@ -78,12 +63,10 @@ page-smjestaj-detalji {
     display: table;
     margin: 0 auto;
     padding: 10px;
-
   }
 
   .inner_icons_div
   {
-
     margin-left: 5px;
     margin-right: 5px;
     text-align: center;
@@ -92,7 +75,6 @@ page-smjestaj-detalji {
     float: left;
     background-color: #CCC;
     border-radius: 50px;
-
   }
 
   .galerija_img_div
@@ -103,7 +85,6 @@ page-smjestaj-detalji {
 
   .galerija_image
   {
-
     margin-top: -50em;
     width: 5em;
     height: 5em;
@@ -119,11 +100,9 @@ page-smjestaj-detalji {
 
   .galerija_div
   {
-
     position: absolute;
     width: 100%;
     margin-top: -4.2em;
-
   }
 
   .zvijezdice
@@ -132,22 +111,12 @@ page-smjestaj-detalji {
     text-align: center;
     color: #F7A54B;
     font-size: 1.5em;
-
-  }
-
-  .rating_span
-  {
-    font-size: 0.6em !important;
-    text-align: center !important;
-    color: #FFF;
-
   }
 
   .info_icon
   {
-    font-size: 1.1em !important;
+    font-size: 1.2em !important;
     color: #F7A54B;
-
   }
 
   .icon_list
@@ -162,7 +131,9 @@ page-smjestaj-detalji {
     color: #F7A54B;
   }
 
-
-
+  .kontakt_link
+  {
+    width: 45px;
+  }
 
 }

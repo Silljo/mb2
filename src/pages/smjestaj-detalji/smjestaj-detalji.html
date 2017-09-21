@@ -53,13 +53,17 @@
         </ion-avatar>
       </ion-item>
       <ion-item-options side="right">
-        <a href="tel:{{kontakt_telefon}}" ion-button color="crvena">
+        <a class="kontakt_link" *ngIf="kontakt_telefon != ''" href="tel:{{kontakt_telefon}}" ion-button color="crvena">
           <ion-icon name="md-call"></ion-icon>
-          Tel/Mob
+          Tel
         </a>
-        <a href="mailto:{{kontakt_email}}" ion-button color="zelena">
+        <a class="kontakt_link" *ngIf="kontakt_mobitel != ''" href="tel:{{kontakt_telefon}}" ion-button color="crna">
+          <ion-icon name="ios-phone-portrait"></ion-icon>
+          Mob
+        </a>
+        <a class="kontakt_link" *ngIf="kontakt_email != ''" href="mailto:{{kontakt_email}}" ion-button color="zelena">
           <ion-icon name="mail"></ion-icon>
-          &nbsp;E-mail&nbsp;
+          E-mail
         </a>
       </ion-item-options>
     </ion-item-sliding>

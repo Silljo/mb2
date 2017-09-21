@@ -38,8 +38,6 @@ export class SmjestajDetaljiPage {
 
     this.id = navParams.get('id');
 
-    this.id = 1;
-
     this.smjestaj = db.object('/smjestaj_detalji/' + this.id);
 
     this.smjestaj.subscribe(data => {
@@ -85,7 +83,7 @@ export class SmjestajDetaljiPage {
     this.geolocation.getCurrentPosition(options).then((resp) => {
  // resp.coords.latitude
  // resp.coords.longitude
-           
+
        let options: LaunchNavigatorOptions = {
          start: resp.coords.latitude + ", " + resp.coords.longitude
        };

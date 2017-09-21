@@ -5,6 +5,18 @@ page-smjestaj {
     margin-top: 2%;
   }
 
+  .inner_div
+  {
+  	position: absolute;
+  	top: 286px;
+  	width: 100%;
+    height: 114px;
+  	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  	font: 150%/1.6 sans-serif;
+  	text-align: center;
+    padding-top: 20px;
+  }
+
   .smjestaj_cols
   {
     display: grid;
@@ -35,7 +47,7 @@ page-smjestaj {
     flex-flow: column;
     text-align: center !important;
     font-weight: 300;
-    padding-top: 0.5em;
+    padding-top: 8px;
   }
 
   .smjestaj_tekst_ikone
@@ -45,5 +57,29 @@ page-smjestaj {
     line-height: 1em;
     text-align: center !important;
     font-weight: 300;
+    text-transform: capitalize;
   }
+
+  .wraper_div_main
+  {
+    width: 100%;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: cover;
+  }
+
+  .inner_div
+  {
+  	position: inherit;
+    float: right;
+  	width: 30%;
+    height: 100%;
+  	background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  	font: 100%/1.4 sans-serif;
+  	text-align: center;
+    padding: 20px;
+    color: #FFF;
+  }
+
 }
