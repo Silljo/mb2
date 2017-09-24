@@ -31,8 +31,6 @@ export class SmjestajDetaljiPage {
   location_lat: number;
   location_lon: number;
 
-
-
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase, public viewCtrl: ViewController,
               private launchNavigator: LaunchNavigator, private geolocation: Geolocation) {
 
@@ -81,8 +79,6 @@ export class SmjestajDetaljiPage {
     };
 
     this.geolocation.getCurrentPosition(options).then((resp) => {
- // resp.coords.latitude
- // resp.coords.longitude
 
        let options: LaunchNavigatorOptions = {
          start: resp.coords.latitude + ", " + resp.coords.longitude

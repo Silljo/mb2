@@ -6,6 +6,7 @@ import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SmjestajPage } from '../pages/smjestaj/smjestaj';
+import { GastroPage } from '../pages/gastro/gastro';
 
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -17,7 +18,7 @@ import { Storage } from '@ionic/storage';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SmjestajPage;
+  rootPage: any = GastroPage;
   pages: Array<{title: string, component: any, icon: string}>;
   user_img:string;
   username: string;
@@ -30,6 +31,7 @@ export class MyApp {
     this.pages = [
       { title: 'Početna', component: HomePage, icon: 'md-home'},
       { title: 'Smještaj', component: SmjestajPage, icon: 'md-home'},
+      { title: 'Gastro', component: GastroPage, icon: 'md-home'},
     ];
 
     events.subscribe('user:signedIn', (userEventData) => {

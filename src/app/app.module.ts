@@ -18,6 +18,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SmjestajPage } from '../pages/smjestaj/smjestaj';
+import { GastroPage } from '../pages/gastro/gastro';
 
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -27,7 +28,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     MyApp,
     HomePage,
     LoginPage,
-    SmjestajPage
+    SmjestajPage,
+    GastroPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     MyApp,
     HomePage,
     LoginPage,
-    SmjestajPage
+    SmjestajPage,
+    GastroPage
   ],
   providers: [
     StatusBar,
