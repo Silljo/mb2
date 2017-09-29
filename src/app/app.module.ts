@@ -20,9 +20,13 @@ import { LoginPage } from '../pages/login/login';
 import { SmjestajPage } from '../pages/smjestaj/smjestaj';
 import { GastroPage } from '../pages/gastro/gastro';
 import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
+import { InteraktivnaMapaPage } from '../pages/interaktivna-mapa/interaktivna-mapa';
 
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
+import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
+import { Network } from '@ionic-native/network';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     LoginPage,
     SmjestajPage,
     GastroPage,
-    DogadjanjaPage
+    DogadjanjaPage,
+    InteraktivnaMapaPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     LoginPage,
     SmjestajPage,
     GastroPage,
-    DogadjanjaPage
+    DogadjanjaPage,
+    InteraktivnaMapaPage
   ],
   providers: [
     StatusBar,
@@ -59,7 +65,10 @@ import { Geolocation } from '@ionic-native/geolocation';
     Facebook,
     StreamingMedia,
     LaunchNavigator,
-    Geolocation
+    Geolocation,
+    ConnectivityServiceProvider,
+    Network,
+    GoogleMaps
   ]
 })
 export class AppModule {}

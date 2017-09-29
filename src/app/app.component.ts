@@ -8,10 +8,13 @@ import { LoginPage } from '../pages/login/login';
 import { SmjestajPage } from '../pages/smjestaj/smjestaj';
 import { GastroPage } from '../pages/gastro/gastro';
 import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
+import { InteraktivnaMapaPage } from '../pages/interaktivna-mapa/interaktivna-mapa';
 
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Storage } from '@ionic/storage';
+import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -19,13 +22,14 @@ import { Storage } from '@ionic/storage';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = DogadjanjaPage;
+  rootPage: any = InteraktivnaMapaPage;
   pages: Array<{title: string, component: any, icon: string}>;
   user_img:string;
   username: string;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private streamingMedia: StreamingMedia,
-              private afAuth: AngularFireAuth, private toast: ToastController, private storage: Storage, public events: Events) {
+              private afAuth: AngularFireAuth, private toast: ToastController, private storage: Storage, public events: Events,
+              public conn: ConnectivityServiceProvider) {
 
     this.initializeApp();
 
@@ -34,6 +38,7 @@ export class MyApp {
       { title: 'Smještaj', component: SmjestajPage, icon: 'md-home'},
       { title: 'Gastro', component: GastroPage, icon: 'md-home'},
       { title: 'Događanja', component: DogadjanjaPage, icon: 'md-home'},
+      { title: 'Interaktivna mapa', component: InteraktivnaMapaPage, icon: 'md-home'}
     ];
 
     events.subscribe('user:signedIn', (userEventData) => {
