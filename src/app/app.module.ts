@@ -21,12 +21,19 @@ import { SmjestajPage } from '../pages/smjestaj/smjestaj';
 import { GastroPage } from '../pages/gastro/gastro';
 import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
 import { InteraktivnaMapaPage } from '../pages/interaktivna-mapa/interaktivna-mapa';
+import { AtrakcijePage } from '../pages/atrakcije/atrakcije';
 
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 import { Network } from '@ionic-native/network';
 import { GoogleMaps } from '@ionic-native/google-maps';
+import { ApisProvider } from '../providers/apis/apis';
+import { HttpModule } from '@angular/http';
+
+import { TimelineComponent } from '../components/timeline/timeline';
+import { TimelineTimeComponent } from '../components/timeline/timeline';
+import { TimelineItemComponent } from '../components/timeline/timeline';
 
 @NgModule({
   declarations: [
@@ -36,7 +43,11 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     SmjestajPage,
     GastroPage,
     DogadjanjaPage,
-    InteraktivnaMapaPage
+    InteraktivnaMapaPage,
+    AtrakcijePage,
+    TimelineComponent,
+    TimelineItemComponent,
+    TimelineTimeComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +55,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,7 +66,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     SmjestajPage,
     GastroPage,
     DogadjanjaPage,
-    InteraktivnaMapaPage
+    InteraktivnaMapaPage,
+    AtrakcijePage
   ],
   providers: [
     StatusBar,
@@ -68,7 +81,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     Geolocation,
     ConnectivityServiceProvider,
     Network,
-    GoogleMaps
+    GoogleMaps,
+    ApisProvider
   ]
 })
 export class AppModule {}

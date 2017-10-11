@@ -14,9 +14,17 @@ export class DogadjanjaPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
 
-    this.dogadjanja_kultura = db.list('/dogadjanja_kultura/', {query: {limitToLast: 50, orderByValue: true}});
-    this.dogadjanja_sport = db.list('/dogadjanja_sport/', {query: {limitToLast: 50, orderByValue: true}});
-    this.dogadjanja_zabava = db.list('/dogadjanja_zabava/', {query: {limitToLast: 50, orderByValue: true}});
+    db.list("/dogadjanja_kultura/", {query:{orderByChild : "order_date"}}).subscribe((data_kultura) => {
+        this.dogadjanja_kultura = data_kultura;
+    });
+
+    db.list("/dogadjanja_sport/", {query:{orderByChild : "order_date"}}).subscribe((data_sport) => {
+        this.dogadjanja_sport = data_sport;
+    });
+
+    db.list("/dogadjanja_zabava/", {query:{orderByChild : "order_date"}}).subscribe((data_zabava) => {
+        this.dogadjanja_zabava = data_zabava;
+    });
 
   }
 

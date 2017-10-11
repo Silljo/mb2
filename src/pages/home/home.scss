@@ -1,3 +1,36 @@
 page-home {
 
+  .slides_div_image_vrijeme
+  {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .grid_vrijeme_pozadina
+  {
+
+  }
+
+  .vrijeme_col_danasnji_datum
+  {
+    text-align: center;
+    color: #FFF;
+  }
+
+  .grid_danasnji_datum
+  {
+    position: absolute;
+    z-index: 9999999;
+  }
+
+  .slide_prognoza
+  {
+    width: 25%;
+    height: 150px;
+    background-color: red;
+  }
+
 }

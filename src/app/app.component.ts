@@ -9,6 +9,7 @@ import { SmjestajPage } from '../pages/smjestaj/smjestaj';
 import { GastroPage } from '../pages/gastro/gastro';
 import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
 import { InteraktivnaMapaPage } from '../pages/interaktivna-mapa/interaktivna-mapa';
+import { AtrakcijePage } from '../pages/atrakcije/atrakcije';
 
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -22,7 +23,7 @@ import { ConnectivityServiceProvider } from '../providers/connectivity-service/c
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = InteraktivnaMapaPage;
+  rootPage: any = DogadjanjaPage;
   pages: Array<{title: string, component: any, icon: string}>;
   user_img:string;
   username: string;
@@ -38,7 +39,8 @@ export class MyApp {
       { title: 'Smještaj', component: SmjestajPage, icon: 'md-home'},
       { title: 'Gastro', component: GastroPage, icon: 'md-home'},
       { title: 'Događanja', component: DogadjanjaPage, icon: 'md-home'},
-      { title: 'Interaktivna mapa', component: InteraktivnaMapaPage, icon: 'md-home'}
+      { title: 'Interaktivna mapa', component: InteraktivnaMapaPage, icon: 'md-home'},
+      { title: 'Atrakcije', component: AtrakcijePage, icon: 'md-home'}
     ];
 
     events.subscribe('user:signedIn', (userEventData) => {

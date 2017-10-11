@@ -29,31 +29,11 @@
 
   <div [ngSwitch]="dogadjanja" class="segmet_div">
 
-    <div *ngSwitchCase="'kultura'">
-      <ion-grid *ngFor="let kultura of dogadjanja_kultura | async" class="no_padding">
-
-        <ion-row *ngIf="kultura.tip == 'simple'" col-12  class="no_padding">
-
-          <ion-card>
-
-            <ion-item>
-              <ion-avatar item-start>
-                <img src="{{kultura.slika_avatar}}">
-              </ion-avatar>
-              <h2>{{kultura.naziv}}</h2>
-              <h3>{{kultura.lokacija}}</h3>
-              <p>{{kultura.datum}}</p>
-            </ion-item>
-
-            <ion-card-content>
-              <p>{{kultura.opis}}</p>
-            </ion-card-content>
-
-          </ion-card>
-
-        </ion-row>
-
-        <ion-row *ngIf="kultura.tip == 'complex'" col-12  class="no_padding">
+    <div *ngSwitchCase="'kultura'" class="padding_custom">
+      <timeline endIcon="">
+        <timeline-item *ngFor="let kultura of dogadjanja_kultura">
+          <timeline-time [title]="[kultura.datum, kultura.vrijeme]"></timeline-time>
+          <ion-icon [name]="'calendar'"></ion-icon>
 
           <ion-card>
 
@@ -62,48 +42,24 @@
                 <img src="{{kultura.slika_avatar}}">
               </ion-avatar>
               <h2>{{kultura.naziv}}</h2>
-              <h3>{{kultura.lokacija}}</h3>
-              <p>{{kultura.datum}}</p>
+              <p>{{kultura.lokacija}}</p>
             </ion-item>
 
             <img src="{{kultura.slika}}">
 
             <ion-card-content>
-              <p>{{kultura.opis}}</p>
+              {{kultura.opis}}
             </ion-card-content>
-
           </ion-card>
-
-        </ion-row>
-
-      </ion-grid>
+        </timeline-item>
+      </timeline>
     </div>
 
-    <div *ngSwitchCase="'sport'">
-      <ion-grid *ngFor="let sport of dogadjanja_sport | async" class="no_padding">
-
-        <ion-row *ngIf="sport.tip == 'simple'" col-12  class="no_padding">
-
-          <ion-card>
-
-            <ion-item>
-              <ion-avatar item-start>
-                <img src="{{sport.slika_avatar}}">
-              </ion-avatar>
-              <h2>{{sport.naziv}}</h2>
-              <h3>{{sport.lokacija}}</h3>
-              <p>{{sport.datum}}</p>
-            </ion-item>
-
-            <ion-card-content>
-              <p>{{sport.opis}}</p>
-            </ion-card-content>
-
-          </ion-card>
-
-        </ion-row>
-
-        <ion-row *ngIf="sport.tip == 'complex'" col-12  class="no_padding">
+    <div *ngSwitchCase="'sport'" class="padding_custom">
+      <timeline endIcon="">
+        <timeline-item *ngFor="let sport of dogadjanja_sport">
+          <timeline-time [title]="[sport.datum, sport.vrijeme]"></timeline-time>
+          <ion-icon [name]="'calendar'"></ion-icon>
 
           <ion-card>
 
@@ -112,48 +68,24 @@
                 <img src="{{sport.slika_avatar}}">
               </ion-avatar>
               <h2>{{sport.naziv}}</h2>
-              <h3>{{sport.lokacija}}</h3>
-              <p>{{sport.datum}}</p>
+              <p>{{sport.lokacija}}</p>
             </ion-item>
 
             <img src="{{sport.slika}}">
 
             <ion-card-content>
-              <p>{{sport.opis}}</p>
+              {{sport.opis}}
             </ion-card-content>
-
           </ion-card>
-
-        </ion-row>
-
-      </ion-grid>
+        </timeline-item>
+      </timeline>
     </div>
 
-    <div *ngSwitchCase="'zabava'">
-      <ion-grid *ngFor="let zabava of dogadjanja_zabava | async" class="no_padding">
-
-        <ion-row *ngIf="zabava.tip == 'simple'" col-12  class="no_padding">
-
-          <ion-card>
-
-            <ion-item>
-              <ion-avatar item-start>
-                <img src="{{zabava.slika_avatar}}">
-              </ion-avatar>
-              <h2>{{zabava.naziv}}</h2>
-              <h3>{{zabava.lokacija}}</h3>
-              <p>{{zabava.datum}}</p>
-            </ion-item>
-
-            <ion-card-content>
-              <p>{{zabava.opis}}</p>
-            </ion-card-content>
-
-          </ion-card>
-
-        </ion-row>
-
-        <ion-row *ngIf="zabava.tip == 'complex'" col-12  class="no_padding">
+    <div *ngSwitchCase="'zabava'" class="padding_custom">
+      <timeline endIcon="">
+        <timeline-item *ngFor="let zabava of dogadjanja_zabava">
+          <timeline-time [title]="[zabava.datum, zabava.vrijeme]"></timeline-time>
+          <ion-icon [name]="'calendar'"></ion-icon>
 
           <ion-card>
 
@@ -162,21 +94,17 @@
                 <img src="{{zabava.slika_avatar}}">
               </ion-avatar>
               <h2>{{zabava.naziv}}</h2>
-              <h3>{{zabava.lokacija}}</h3>
-              <p>{{zabava.datum}}</p>
+              <p>{{zabava.lokacija}}</p>
             </ion-item>
 
             <img src="{{zabava.slika}}">
 
             <ion-card-content>
-              <p>{{zabava.opis}}</p>
+              {{zabava.opis}}
             </ion-card-content>
-
           </ion-card>
-
-        </ion-row>
-
-      </ion-grid>
+        </timeline-item>
+      </timeline>
     </div>
 
   </div>

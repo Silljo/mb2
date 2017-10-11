@@ -1,0 +1,139 @@
+page-atrakcije-detalji {
+
+  .icon_back
+  {
+    position: fixed;
+    padding: 20px;
+    font-size: 4em;
+    color: #FFF;
+    z-index: 9999;
+  }
+
+  .wraper_div_main
+  {
+    width: 100%;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .inner_div
+  {
+  	position: absolute;
+  	top: 286px;
+  	width: 100%;
+    height: 114px;
+  	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  	font: 150%/1.6 sans-serif;
+  	text-align: center;
+    padding-top: 20px;
+  }
+
+  .smjestaj_naziv
+  {
+    font-size: 0.8em;
+    font-weight: 350;
+    display: block;
+    padding-top: 25px;
+    color: #F7A54B;
+  }
+
+  .adresa
+  {
+    font-size: 0.6em;
+    font-weight: 200;
+    color: #F7A54B;
+  }
+
+  .grid_ponuda
+  {
+    background-color: #DDD;
+  }
+
+  .ponuda_ikone
+  {
+    line-height: 2em;
+    font-size: 2em;
+    color: #EEE
+  }
+
+  .main_icons_div
+  {
+    display: table;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .inner_icons_div
+  {
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    width: 4em;
+    height: 4em;
+    float: left;
+    background-color: #CCC;
+    border-radius: 50px;
+  }
+
+  .galerija_img_div
+  {
+    width: inherit;
+    position: absolute;
+  }
+
+  .galerija_image
+  {
+    margin-top: -50em;
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    border: 1px #CCC solid;
+  }
+
+  .galerija_icon
+  {
+    font-size: 3em;
+    opacity: .5;
+  }
+
+  .galerija_div
+  {
+    position: absolute;
+    width: 100%;
+    margin-top: -4.2em;
+  }
+
+  .zvijezdice
+  {
+    background-color: #EEE;
+    text-align: center;
+    color: #F7A54B;
+    font-size: 1.5em;
+  }
+
+  .info_icon
+  {
+    font-size: 1.2em !important;
+    color: #F7A54B;
+  }
+
+  .icon_list
+  {
+    color: #F7A54B;
+    font-size: 2.5em !important;
+  }
+
+  .pull
+  {
+    font-size: 0.5em !important;
+    color: #F7A54B;
+  }
+
+  .kontakt_link
+  {
+    width: 45px;
+  }
+
+}

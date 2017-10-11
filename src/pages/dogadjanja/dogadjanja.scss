@@ -6,6 +6,12 @@ page-dogadjanja {
     z-index: 9999;
     background-color: #FFF;
     padding: 10px;
+    padding-bottom: 0px;
+  }
+
+  .padding_custom
+  {
+    padding: 0px 10px 0px 10px !important;
   }
 
 }

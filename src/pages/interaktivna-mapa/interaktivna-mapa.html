@@ -10,7 +10,27 @@
 </ion-header>
 
 
-<ion-content padding>
-  <div #map id="map"></div>
-  <span class="smallPanel" id="label"></span>
+<ion-content>
+
+  <div #map id="map">
+
+    <ion-grid>
+      <ion-row class="row_mapa_show_hide">
+        <ion-col col-3>Opće<br>
+          <ion-checkbox color="blue" [(ngModel)]="markers_opcenito_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
+        </ion-col>
+        <ion-col col-3>Događanja<br>
+          <ion-checkbox color="red" [(ngModel)]="markers_dogadjanja_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
+        </ion-col>
+        <ion-col col-3>Gastro<br>
+          <ion-checkbox color="green" [(ngModel)]="markers_gastro_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
+        </ion-col>
+        <ion-col col-3>Smještaj<br>
+          <ion-checkbox color="orange" [(ngModel)]="markers_smjestaj_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div>
+
 </ion-content>
