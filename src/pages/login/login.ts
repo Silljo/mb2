@@ -29,8 +29,7 @@ export class LoginPage {
     this.auth.login(user.email, user.password).then(
       res => {
         //Dobili smo nešto natrag, i bilo je uspješno
-        this.auth.obrada_uspjesnog_logina(res).then(res => {
-          this.events.publish('user:signedIn', 'login');
+        this.auth.obrada_uspjesnog_logina(res.uid, res.email, res.photoURL, res.displayName).then(res => {
           this.navCtrl.setRoot(HomePage);
         });
         //
@@ -60,8 +59,7 @@ export class LoginPage {
 
            firebase.auth().signInWithCredential(facebookCredential)
           .then((success) => {
-              this.auth.obrada_uspjesnog_logina({'uid': success.uid, 'email': success.email, 'photoURL': success.photoURL, 'displayName': success.displayName}).then(res => {
-                this.events.publish('user:signedIn', 'login');
+              this.auth.obrada_uspjesnog_logina(success.uid, success.email, success.photoURL, success.displayName).then(res => {
                 this.navCtrl.setRoot(HomePage);
               });
           })

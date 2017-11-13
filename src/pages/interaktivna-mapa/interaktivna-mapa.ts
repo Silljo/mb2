@@ -80,7 +80,7 @@ export class InteraktivnaMapaPage {
             'padding': {
               'left': 5,
               'top': 60,
-              'bottom': 5,
+              'bottom': 60,
               'right': 5
             }
           }

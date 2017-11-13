@@ -94,11 +94,11 @@ export class SmjestajDetaljiPage {
       alert('Greška: ' + error);
     });
 
+  }
 
-
-
-
-
+  open_galerija(id, child_node_baza)
+  {
+    this.navCtrl.push('GalerijaPage', {id: id, tip: child_node_baza});
   }
 
 

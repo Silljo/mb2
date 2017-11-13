@@ -1,9 +1,10 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="narandjasta">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Smještaj</ion-title>
+    <span class="navbar_small_subtitle">PONUDA HOTELA, SOBA I PRIVATNOG SMJEŠTAJA</span>
   </ion-navbar>
 </ion-header>
 
@@ -11,54 +12,21 @@
 
   <ion-grid>
    <ion-row class="main_row" *ngFor="let smjestaj_items of smjestaj | async">
-
-     <div class="wraper_div_main" [style.background-image]="'url(' + smjestaj_items.slika + ')'">
-
-       <div>
-
-         <ion-col class="naziv_zvjezdice" col-9>{{smjestaj_items.naziv_objekta}}<br>
-           <span *ngIf="smjestaj_items.zvjezdica == 1"><ion-icon name="star"></ion-icon></span>
-           <span *ngIf="smjestaj_items.zvjezdica == 2"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
-           <span *ngIf="smjestaj_items.zvjezdica == 3"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
-           <span *ngIf="smjestaj_items.zvjezdica == 4"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
-           <span *ngIf="smjestaj_items.zvjezdica == 5"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
-         </ion-col>
-
-       </div>
-
+     <div class="wraper_div_main" [style.background-image]="'url(' + smjestaj_items.slika + ')'" (click)="detalji_smjestaja(smjestaj_items.id)">
        <div class="inner_div">
-         <ion-icon col-12 class="action_icons_smjestaj" name="ios-information-circle-outline" (click)="detalji_smjestaja(smjestaj_items.id)"><span class="smjestaj_tekst_ikone">info</span></ion-icon>
-         <a class="link" href="mailto:{{smjestaj_items.email}}?Subject={{smjestaj_items.naziv_objekta}}" target="_top"><ion-icon col-12 class="action_icons_smjestaj" name="ios-at-outline"><span class="smjestaj_tekst_ikone">e-mail</span></ion-icon></a>
-         <a class="link" href="tel:{{smjestaj_items.kontakt}}"><ion-icon col-12 class="action_icons_smjestaj" name="ios-call-outline"><span class="smjestaj_tekst_ikone">tel/mob</span></ion-icon></a>
-
+         <span class="span_ikona_open"><ion-icon name="ios-arrow-forward" style="color: #FFF;"></ion-icon></span>
+         <span class="span_naziv_obj">{{smjestaj_items.naziv_objekta}}</span><br>
+         <span class="span_tip">{{smjestaj_items.tip}}</span><br>
+         <span *ngIf="smjestaj_items.zvjezdica == 1"><ion-icon name="star"></ion-icon></span>
+         <span *ngIf="smjestaj_items.zvjezdica == 2"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+         <span *ngIf="smjestaj_items.zvjezdica == 3"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+         <span *ngIf="smjestaj_items.zvjezdica == 4"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+         <span *ngIf="smjestaj_items.zvjezdica == 5"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
        </div>
      </div>
-
-</ion-row>
-
-</ion-grid>
-
-
-
-<!--
-  <ion-grid>
-   <ion-row class="main_row" *ngFor="let smjestaj_items of smjestaj | async">
-
-
-
-
-
-    <ion-col class="smjestaj_cols no_padding" col-9>
-     <img class="no_padding" src="{{smjestaj_items.slika}}">
-    </ion-col>
-
-    <ion-col col-3 class="smjestaj_cols no_padding smjestaj_info_grid">
-     <ion-icon col-12 class="action_icons_smjestaj" name="ios-information-circle-outline" (click)="detalji_smjestaja(smjestaj_items.id)"><span class="smjestaj_tekst_ikone">info</span></ion-icon>
-     <a col-12 class="link" href="mailto:{{smjestaj_items.email}}?Subject={{smjestaj_items.naziv_objekta}}" target="_top"><ion-icon col-12 class="action_icons_smjestaj" name="ios-at-outline"><span class="smjestaj_tekst_ikone">e-mail</span></ion-icon></a>
-     <a col-12 class="link" href="tel:{{smjestaj_items.kontakt}}"><ion-icon col-12 class="action_icons_smjestaj" name="ios-call-outline"><span class="smjestaj_tekst_ikone">tel/mob</span></ion-icon></a>
-    </ion-col>
    </ion-row>
+ </ion-grid>
 
- </ion-grid>-->
+
 
 </ion-content>

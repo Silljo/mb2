@@ -1,9 +1,11 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="roza">
     <button ion-button menuToggle >
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Gastro</ion-title>
+    <span class="navbar_small_subtitle">PONUDA HRANE, JELA I PIĆA</span>
+
   </ion-navbar>
 </ion-header>
 
@@ -11,10 +13,10 @@
 
   <ion-segment class="segment_class" [(ngModel)]="gastro" color="secondary">
     <ion-segment-button value="hrana">
-      <ion-icon name="md-restaurant"></ion-icon> Hrana
+      <ion-icon name="md-restaurant" color="roza"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="pice">
-      <ion-icon name="md-wine"></ion-icon> Piće
+      <ion-icon name="md-wine" color="roza"></ion-icon>
     </ion-segment-button>
   </ion-segment>
 

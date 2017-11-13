@@ -1,5 +1,18 @@
 page-dogadjanja {
 
+  .segment-md-secondary .segment-button {
+    color: $zelena_boja;
+  }
+
+  .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
+    border-color: $zelena_boja !important;
+    color: $zelena_boja;
+  }
+
+  .segment-md .segment-button {
+    border-bottom-color: rgba(39, 121, 61, 0.2) !important;
+  }
+
   .segment_class
   {
     margin-top: 10px;
@@ -11,6 +24,7 @@ page-dogadjanja {
 
   .padding_custom
   {
+    margin-top: -15px !important;
     padding: 0px 10px 0px 10px !important;
   }
 

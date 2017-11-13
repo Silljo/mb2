@@ -1,0 +1,24 @@
+page-duhovni-kutak {
+
+  .timeline timeline-item timeline-time span:last-child {
+    color: $crna_boja;
+  }
+
+  .timeline timeline-item ion-icon {
+    background: $crna_boja;
+  }
+
+  .timeline:before {
+    background: $siva_boja;
+  }
+
+  .timeline timeline-item ion-icon{
+    box-shadow: 0 0 0 8px $siva_boja;
+
+    &:after {
+        border-left-color: $siva_boja;
+    }
+
+  }
+
+}

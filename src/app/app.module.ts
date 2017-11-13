@@ -22,6 +22,8 @@ import { GastroPage } from '../pages/gastro/gastro';
 import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
 import { InteraktivnaMapaPage } from '../pages/interaktivna-mapa/interaktivna-mapa';
 import { AtrakcijePage } from '../pages/atrakcije/atrakcije';
+import { DuhovniKutakPage } from '../pages/duhovni-kutak/duhovni-kutak';
+import { KomunalnoPage } from '../pages/komunalno/komunalno';
 
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -30,6 +32,8 @@ import { Network } from '@ionic-native/network';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { ApisProvider } from '../providers/apis/apis';
 import { HttpModule } from '@angular/http';
+import { Camera } from '@ionic-native/camera';
+import { FCM } from '@ionic-native/fcm';
 
 import { TimelineComponent } from '../components/timeline/timeline';
 import { TimelineTimeComponent } from '../components/timeline/timeline';
@@ -45,9 +49,11 @@ import { TimelineItemComponent } from '../components/timeline/timeline';
     DogadjanjaPage,
     InteraktivnaMapaPage,
     AtrakcijePage,
+    DuhovniKutakPage,
     TimelineComponent,
     TimelineItemComponent,
-    TimelineTimeComponent
+    TimelineTimeComponent,
+    KomunalnoPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,9 @@ import { TimelineItemComponent } from '../components/timeline/timeline';
     GastroPage,
     DogadjanjaPage,
     InteraktivnaMapaPage,
-    AtrakcijePage
+    AtrakcijePage,
+    DuhovniKutakPage,
+    KomunalnoPage
   ],
   providers: [
     StatusBar,
@@ -82,7 +90,9 @@ import { TimelineItemComponent } from '../components/timeline/timeline';
     ConnectivityServiceProvider,
     Network,
     GoogleMaps,
-    ApisProvider
+    ApisProvider,
+    Camera,
+    FCM
   ]
 })
 export class AppModule {}

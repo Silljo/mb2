@@ -3,6 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { ToastController } from 'ionic-angular';
 import { LocalStorageProvider } from '../local-storage/local-storage';
 import { Storage } from '@ionic/storage';
+import { FCM } from '@ionic-native/fcm';
 
 import firebase from 'firebase';
 
@@ -16,33 +17,45 @@ export class AuthProvider {
   user_name: string;
   fb_response: any;
 
-  constructor(private afAuth: AngularFireAuth, private toastCtrl: ToastController, private storage: Storage) {
+  constructor(private afAuth: AngularFireAuth, private toastCtrl: ToastController, private storage: Storage, private fcm: FCM) {
 
   }
 
   async login(user_email, user_password) {
-
       return await this.afAuth.auth.signInWithEmailAndPassword(user_email, user_password);
-
   }
 
-  async obrada_uspjesnog_logina(data)
+  async obrada_uspjesnog_logina(uid, email, photo, naziv)
   {
 
-    this.uid = data.uid;
-    this.e_mail = data.email;
-    this.photo_url = data.photoURL;
-    this.user_name = data.displayName;
+    this.fcm.subscribeToTopic('test_topic');
 
-    if(this.user_name == null)
-    {
-      this.user_name = this.e_mail.split("@")[0];
-    }
+    this.fcm.getToken().then(token=>{
+      console.log(token);
+    })
 
-    if(this.photo_url == null || this.photo_url == '')
-    {
-      this.photo_url = 'https://firebasestorage.googleapis.com/v0/b/mbistrica-c5bd3.appspot.com/o/mblogo.png?alt=media&token=32a7650c-7a01-4b51-965a-7e6c17e7fcb9';
-    }
+    //Ovdje piknemo da vidimo da li postoji u bazi
+    var ref_profle = firebase.database().ref("/user_profiles/");
+    ref_profle.once('value').then(function(dataSnapshot) {
+
+      //Ako ne postoji e onda ga spremamo
+      if (!dataSnapshot.hasChild(uid)) {
+
+        if(naziv == null){naziv = email.split("@")[0];}
+        if(photo == null || photo == ''){photo = 'https://firebasestorage.googleapis.com/v0/b/mbistrica-c5bd3.appspot.com/o/mblogo.png?alt=media&token=32a7650c-7a01-4b51-965a-7e6c17e7fcb9';}
+
+        firebase.database().ref('/user_profiles/' + uid).set({
+            uid: uid,
+            email: email,
+            slika: photo,
+            display_name: naziv
+        });
+
+        //I treba ga subscrajbati na sve topice
+        this.fcm.subscribeToTopic('test_topic');
+      }
+
+    });
 
     await this.storage.set('uid', this.uid);
     await this.storage.set('e_mail', this.e_mail);
@@ -83,12 +96,6 @@ export class AuthProvider {
   async register(user_email, user_password)
   {
     return await this.afAuth.auth.createUserWithEmailAndPassword(user_email, user_password);
-  }
-
-  obrada_uspjesnog_registriranja()
-  {
-    //redirect na login page
-    return true;
   }
 
 

@@ -1,36 +1,112 @@
 page-home {
 
-  .slides_div_image_vrijeme
+  .toolbar-background {
+    border-color: transparent;
+    background: transparent;
+    color: #FFF;
+  }
+
+  .main_content
   {
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
     background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
   }
 
-  .grid_vrijeme_pozadina
+  .vremenska_prognoza_unaprijed
   {
+    margin-top: 100%;
+    color: #FFF;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .prognoza_col
+  {
+    font-size: 0.6em;
+    padding-bottom: 1rem;
 
   }
 
-  .vrijeme_col_danasnji_datum
+  .border_left_right
   {
-    text-align: center;
-    color: #FFF;
+    border-left: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #FFF !important;
+    opacity: 0.7 !important;
+  }
+
+  .swiper-pagination-bullet {
+    background: #EEE;
+    opacity: 0.2;
+  }
+
+  .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+    left: 0 !important;
+    bottom: 5px !important;
+    width: 100% !important;
+  }
+
+  .header::after, .tabs[tabsPlacement="top"] > .tabbar::after, .footer::before, .tabs[tabsPlacement="bottom"] > .tabbar::before {
+    background-image: none !important;
+  }
+
+  .menu_button
+  {
+    background-color: rgba(0,0,0,0.5) !important;
   }
 
   .grid_danasnji_datum
   {
-    position: absolute;
-    z-index: 9999999;
+    margin-top: -5px;
+    background-color: rgba(0,0,0,0.2);
   }
 
-  .slide_prognoza
+  .vrijeme_col_danasnji_datum
   {
-    width: 25%;
-    height: 150px;
-    background-color: red;
+    color: #FFF;
+    font-weight: 100;
   }
+
+  .svg_prognoza
+  {
+    max-height: 45px;
+  }
+
+  .svg_vrijeme
+  {
+    max-height: 35px;
+    float: right;
+  }
+
+  .div_vrijeme_opis
+  {
+    float: right;
+    padding-top: 10px;
+  }
+
+  .div_vrijeme_max
+  {
+    float: right;
+    clear: right;
+  }
+
+  .div_vrijeme_min
+  {
+    padding-right: 10px;
+    float: right;
+  }
+
+  .trenutno_vrijeme
+  {
+    float: right;
+    clear: right;
+    font-size: 4em;
+  }
+
+
+
+
 
 }

@@ -88,3 +88,13 @@ ion-menu{
   text-decoration: none;
   color: inherit;
 }
+
+.navbar_small_subtitle
+{
+  padding: 0 12px;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #FFF;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

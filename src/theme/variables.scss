@@ -43,8 +43,18 @@ $colors: (
   zelena: #27793D,
   crna: #000,
   narandjasta: #F7A54B,
-  roza: #F05C6A
+  roza: #F05C6A,
+  bijela: #FFF,
+  plava: #0288D1,
+  siva: #AAA
+
 );
+
+$zelena_boja: #27793D;
+$narandjasta_boja: #F7A54B;
+$siva_boja: #AAA;
+$crna_boja: #000;
+$plava_boja: #0288D1;
 
 
 // App iOS Variables
@@ -58,10 +68,8 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 $segment-button-md-line-height: 3rem;
-
-
-
-
+$segment-button-md-border-bottom-color: rgba(240, 92, 106, 0.2) !important;
+$segment-button-md-border-color-activated: rgba(240, 92, 106, 1) !important;
 
 // App Windows Variables
 // --------------------------------------------------

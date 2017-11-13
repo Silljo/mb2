@@ -1,0 +1,97 @@
+<ion-header>
+
+  <ion-navbar color="plava">
+    <button ion-button menuToggle >
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Komunalno</ion-title>
+    <span class="navbar_small_subtitle">UNOS I PREGLED ARHIVE PRIJAVA NEDOSTATAKA</span>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-segment [(ngModel)]="komunalno_segment" color="plava">
+
+    <ion-segment-button value="prijava">
+      <ion-icon name="ios-warning" color="plava"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button value="arhiva">
+      <ion-icon name="ios-archive" color="plava"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+  <br>
+  <div [ngSwitch]="komunalno_segment">
+
+  <div *ngSwitchCase="'prijava'">
+
+  <form [formGroup]="komunalno" (ngSubmit)="logForm()">
+
+      <ion-list radio-group formControlName="hitnost" no-lines>
+        <ion-list-header class="radio_header">
+          Hitnost
+        </ion-list-header>
+          <ion-item class="margine_prevelike">
+            <ion-label>Visoka</ion-label>
+            <ion-radio value="visoka" color="plava"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Srednja</ion-label>
+            <ion-radio value="srednja" color="plava"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Niska</ion-label>
+            <ion-radio value="niska" color="plava"></ion-radio>
+          </ion-item>
+      </ion-list>
+
+      <ion-item class="margine_prevelike">
+        <ion-label>Mjesto</ion-label>
+        <ion-input type="text" formControlName="mjesto"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Opis</ion-label>
+        <ion-textarea formControlName="opis"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>Kontakt (mob/tel)</ion-label>
+        <ion-input type="number" formControlName="kontakt"></ion-input>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-card>
+          <ion-card-header style="text-align:center;" (click)="slika_komunalno()">
+            <ion-icon name="camera" color="plava"></ion-icon>
+          </ion-card-header>
+          <img src="{{slika}}"/>
+        </ion-card>
+      </ion-item>
+      <ion-input type="hidden" formControlName="slika" value="{{this.slika_validation}}"></ion-input>
+      <br>
+      <button ion-button block type="submit" color="plava" [disabled]="!komunalno.valid">Pošalji</button>
+
+    </form>
+  </div>
+
+    <div *ngSwitchCase="'arhiva'">
+      <ion-card *ngFor="let prijave of prijave_komunalno_data" class="no_padding">
+        <ion-item>
+          <h2>Hitnost: {{prijave.hitnost}}</h2>
+          <h4>Mjesto: {{prijave.mjesto}}</h4>
+          <p>Status: {{prijave.status}}</p>
+        </ion-item>
+
+        <img src="{{prijave.image_url}}"/>
+
+        <ion-card-content>
+          <p>Kontakt: {{prijave.kontakt}}</p><br>
+          <p>Opis: {{prijave.opis}}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+  </div>
+
+</ion-content>

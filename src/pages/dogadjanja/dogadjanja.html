@@ -1,10 +1,11 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="zelena">
     <button ion-button menuToggle >
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Događanja</ion-title>
+    <span class="navbar_small_subtitle">KULTURNA, SPORTSKA, ZABAVNA</span>
   </ion-navbar>
 
 </ion-header>
@@ -12,18 +13,18 @@
 
 <ion-content>
 
-  <ion-segment class="segment_class" [(ngModel)]="dogadjanja" color="secondary">
+  <ion-segment class="segment_class" [(ngModel)]="dogadjanja" color="zelena">
 
     <ion-segment-button value="kultura">
-      <ion-icon style="font-size: 14px;" name="ios-color-palette"></ion-icon>&nbsp;&nbsp;Kulturna
+      <ion-icon name="ios-color-palette"></ion-icon>
     </ion-segment-button>
 
     <ion-segment-button value="sport">
-      <ion-icon style="font-size: 14px;" name="ios-football"></ion-icon>&nbsp;&nbsp;Sportska
+      <ion-icon name="ios-football"></ion-icon>
     </ion-segment-button>
 
     <ion-segment-button value="zabava">
-      <ion-icon style="font-size: 14px;" name="ios-musical-notes"></ion-icon>&nbsp;&nbsp;Zabavna
+      <ion-icon name="ios-musical-notes"></ion-icon>
     </ion-segment-button>
   </ion-segment>
 
@@ -45,7 +46,7 @@
               <p>{{kultura.lokacija}}</p>
             </ion-item>
 
-            <img src="{{kultura.slika}}">
+            <div *ngIf="kultura.slika"><img src="{{kultura.slika}}"></div>
 
             <ion-card-content>
               {{kultura.opis}}
@@ -71,7 +72,7 @@
               <p>{{sport.lokacija}}</p>
             </ion-item>
 
-            <img src="{{sport.slika}}">
+            <div *ngIf="sport.slika"><img src="{{sport.slika}}"></div>
 
             <ion-card-content>
               {{sport.opis}}
@@ -97,7 +98,7 @@
               <p>{{zabava.lokacija}}</p>
             </ion-item>
 
-            <img src="{{zabava.slika}}">
+            <div *ngIf="zabava.slika"><img src="{{zabava.slika}}"></div>
 
             <ion-card-content>
               {{zabava.opis}}

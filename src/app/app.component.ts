@@ -10,9 +10,12 @@ import { GastroPage } from '../pages/gastro/gastro';
 import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
 import { InteraktivnaMapaPage } from '../pages/interaktivna-mapa/interaktivna-mapa';
 import { AtrakcijePage } from '../pages/atrakcije/atrakcije';
+import { DuhovniKutakPage } from '../pages/duhovni-kutak/duhovni-kutak';
+import { KomunalnoPage } from '../pages/komunalno/komunalno';
 
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Storage } from '@ionic/storage';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 
@@ -23,14 +26,14 @@ import { ConnectivityServiceProvider } from '../providers/connectivity-service/c
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = DogadjanjaPage;
+  rootPage: any = InteraktivnaMapaPage;
   pages: Array<{title: string, component: any, icon: string}>;
   user_img:string;
   username: string;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private streamingMedia: StreamingMedia,
               private afAuth: AngularFireAuth, private toast: ToastController, private storage: Storage, public events: Events,
-              public conn: ConnectivityServiceProvider) {
+              public conn: ConnectivityServiceProvider, private db: AngularFireDatabase) {
 
     this.initializeApp();
 
@@ -40,19 +43,10 @@ export class MyApp {
       { title: 'Gastro', component: GastroPage, icon: 'md-home'},
       { title: 'Događanja', component: DogadjanjaPage, icon: 'md-home'},
       { title: 'Interaktivna mapa', component: InteraktivnaMapaPage, icon: 'md-home'},
-      { title: 'Atrakcije', component: AtrakcijePage, icon: 'md-home'}
+      { title: 'Atrakcije', component: AtrakcijePage, icon: 'md-home'},
+      { title: 'Duhovni kutak', component: DuhovniKutakPage, icon: 'md-home'},
+      { title: 'Komunalno', component: KomunalnoPage, icon: 'md-home'}
     ];
-
-    events.subscribe('user:signedIn', (userEventData) => {
-
-      this.storage.get('photo_url').then((photo_url) => {this.user_img = photo_url;});
-      this.storage.get('user_name').then((user_name) => {this.username = user_name;});
-
-    });
-
-    this.storage.get('photo_url').then((photo_url) => {this.user_img = photo_url;});
-    this.storage.get('user_name').then((user_name) => {this.username = user_name;});
-
   }
 
   initializeApp() {
@@ -61,18 +55,24 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
     });
 
     this.afAuth.authState.subscribe(data => {
+
       if (data && data.email && data.uid) {
-        this.toast.create({
-          message: `Welcome to APP_NAME, ${data.email}`,
-          duration: 3000
-        }).present();
+
+        this.rootPage = HomePage;
+
+        //Ajmo po sliku usera i naziv
+        this.db.object("/user_profiles/" + data.uid).subscribe((data_user) => {
+          this.username = data_user.display_name;
+          this.user_img = data_user.slika;
+        });
       }
       else {
         //Nema nikakvih podataka da je korisnik ulogiran...
-
+        this.rootPage = LoginPage;
       }
     });
 
@@ -86,7 +86,6 @@ export class MyApp {
 
   openRadio():void
   {
-
     var audioUrl = 'http://85.10.55.147:8026/stream/';
 
     // Play an audio file with options (all options optional)
@@ -96,13 +95,23 @@ export class MyApp {
       bgImageScale: "fit", // other valid values: "stretch"
       initFullscreen: false, // true(default)/false iOS only
       successCallback: function() {
-        alert("Player closed without error.");
+
       },
       errorCallback: function(errMsg) {
-        alert("Error! " + errMsg);
+
       }
     };
     this.streamingMedia.playAudio(audioUrl, options);
+  }
+
+  login()
+  {
+    this.nav.setRoot(LoginPage);
+  }
+
+  user_postavke()
+  {
+    this.nav.setRoot('UserPostavkePage');
   }
 
 }

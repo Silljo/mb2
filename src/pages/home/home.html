@@ -1,92 +1,80 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+    <button ion-button menuToggle class="menu_button">
+      <ion-icon name="menu" color="bijela"></ion-icon>
     </button>
-    <ion-title>Početna</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content>
+<ion-content class="main_content no_padding" [style.background-image]="'url(' + slika_pozadina + ')'">
 
   <ion-grid class="grid_danasnji_datum">
     <ion-row class="no_padding">
-      <ion-col offset-8 col-4 class="no_padding vrijeme_col_danasnji_datum">
-          <img src="http://openweathermap.org/img/w/{{vrijeme_data_ikona}}.png">
-          <ion-label>{{vrijeme_temp}} &#8451;</ion-label>
-          {{vrijeme_opis}}
-          {{vrijeme_temp_max}}
-          {{vrijeme_temp_min}}
+      <ion-col offset-7 col-4 class="no_padding vrijeme_col_danasnji_datum">
+
+        <div class="div_vrijeme_opis">{{vrijeme_opis}}</div>
+        <img src="/assets/icon/{{vrijeme_data_ikona}}.svg" class="svg_vrijeme">
+
+        <div class="div_vrijeme_max"><ion-icon name="ios-arrow-round-up" style="font-size: 14px;"></ion-icon><span> {{vrijeme_temp_max}}&#176;</span></div>
+        <div class="div_vrijeme_min"><ion-icon pull-down name="ios-arrow-round-down" style="font-size: 14px;"></ion-icon><span> {{vrijeme_temp_min}}&#176;</span></div>
+
+        <div class="trenutno_vrijeme">{{vrijeme_temp | number: '1.0-0'}}&#176;</div>
+
         </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid class="no_padding grid_vrijeme_pozadina">
-    <ion-row class="no_padding">
-      <ion-col col-12 class="no_padding">
-        <ion-slides *ngIf="vrijeme_slike && vrijeme_slike.length" effect="fade" autoplay="5000" loop="true" speed="10000">
-          <ion-slide *ngFor="let slika of vrijeme_slike">
-            <div class="slides_div_image_vrijeme" [style.background-image]="'url(' + slika + ')'"></div>
-          </ion-slide>
-        </ion-slides>
-      </ion-col>
+  <ion-footer>
 
-    </ion-row>
+    <div class="vremenska_prognoza_unaprijed">
+      <ion-slides *ngIf="prognoza && prognoza.length" pager="true">
+        <ion-slide *ngFor="let prognoza_segment of prognoza; let i = index">
+          <ion-grid >
+            <ion-row class="prognoza_col">
+              <ion-col col-2.4>
+                <img class="svg_prognoza" src="/assets/icon/{{prognoza_segment[0].weather[0].icon}}.svg"><br>
+                {{prognoza_segment[0].weather[0].description}}<br>
+                {{prognoza_segment[0].main.temp | number: '1.1-1'}} &#8451;<br>
+                {{prognoza_segment[0].dt_txt | date:'EEE'}},
+                {{prognoza_segment[0].dt_txt | date:'HH:mm'}} h
 
-  </ion-grid>
+              </ion-col>
+              <ion-col col-2.4 class="border_left_right">
+                <img class="svg_prognoza" src="/assets/icon/{{prognoza_segment[1].weather[0].icon}}.svg"><br>
+                {{prognoza_segment[1].weather[0].description}}<br>
+                {{prognoza_segment[1].main.temp | number: '1.1-1'}} &#8451;<br>
+                {{prognoza_segment[1].dt_txt | date:'EEE'}},
+                {{prognoza_segment[1].dt_txt | date:'HH:mm'}} h
 
-  <span (click)="openLogin()" >Login!!!!!!!!!!!!!!!!</span>
+              </ion-col>
+              <ion-col col-2.4 class="border_left_right">
+                <img class="svg_prognoza" src="/assets/icon/{{prognoza_segment[2].weather[0].icon}}.svg"><br>
+                {{prognoza_segment[2].weather[0].description}}<br>
+                {{prognoza_segment[2].main.temp | number: '1.1-1'}} &#8451;<br>
+                {{prognoza_segment[2].dt_txt | date:'EEE'}},
+                {{prognoza_segment[2].dt_txt | date:'HH:mm'}} h
+              </ion-col>
+              <ion-col col-2.4 class="border_left_right">
+                <img class="svg_prognoza" src="/assets/icon/{{prognoza_segment[3].weather[0].icon}}.svg"><br>
+                {{prognoza_segment[3].weather[0].description}}<br>
+                {{prognoza_segment[3].main.temp | number: '1.1-1'}} &#8451;<br>
+                {{prognoza_segment[3].dt_txt | date:'EEE'}},
+                {{prognoza_segment[3].dt_txt | date:'HH:mm'}} h
+              </ion-col>
+              <ion-col col-2.4 class="border_left_right">
+                <img class="svg_prognoza" src="/assets/icon/{{prognoza_segment[4].weather[0].icon}}.svg"><br>
+                {{prognoza_segment[4].weather[0].description}}<br>
+                {{prognoza_segment[4].main.temp | number: '1.1-1'}} &#8451;<br>
+                {{prognoza_segment[4].dt_txt | date:'EEE'}},
+                {{prognoza_segment[4].dt_txt | date:'HH:mm'}} h
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
+      </ion-slides>
+    </div>
 
-
-  <div class="vremenska_prognoza_unaprijed">
-    <ion-slides *ngIf="prognoza && prognoza.length" pager="true">
-      <ion-slide *ngFor="let prognoza_segment of prognoza; let i = index">
-        <ion-grid >
-          <ion-row>
-            <ion-col col-2.4 class="prognoza_col">
-              <img src="http://openweathermap.org/img/w/{{prognoza_segment[0].weather[0].icon}}.png"><br>
-              {{prognoza_segment[0].weather[0].description}}<br>
-              {{prognoza_segment[0].main.temp | number: '1.1-1'}} &#8451;<br>
-              {{prognoza_segment[0].dt_txt | date:'EEE'}},
-              {{prognoza_segment[0].dt_txt | date:'HH:mm'}} h
-
-            </ion-col>
-            <ion-col col-2.4 >
-              <img src="http://openweathermap.org/img/w/{{prognoza_segment[1].weather[0].icon}}.png"><br>
-              {{prognoza_segment[1].weather[0].description}}<br>
-              {{prognoza_segment[1].main.temp | number: '1.1-1'}} &#8451;<br>
-              {{prognoza_segment[1].dt_txt | date:'EEE'}},
-              {{prognoza_segment[1].dt_txt | date:'HH:mm'}} h
-
-            </ion-col>
-            <ion-col col-2.4 >
-              <img src="http://openweathermap.org/img/w/{{prognoza_segment[2].weather[0].icon}}.png"><br>
-              {{prognoza_segment[2].weather[0].description}}<br>
-              {{prognoza_segment[2].main.temp | number: '1.1-1'}} &#8451;<br>
-              {{prognoza_segment[2].dt_txt | date:'EEE'}},
-              {{prognoza_segment[2].dt_txt | date:'HH:mm'}} h
-            </ion-col>
-            <ion-col col-2.4 >
-              <img src="http://openweathermap.org/img/w/{{prognoza_segment[3].weather[0].icon}}.png"><br>
-              {{prognoza_segment[3].weather[0].description}}<br>
-              {{prognoza_segment[3].main.temp | number: '1.1-1'}} &#8451;<br>
-              {{prognoza_segment[3].dt_txt | date:'EEE'}},
-              {{prognoza_segment[3].dt_txt | date:'HH:mm'}} h
-            </ion-col>
-            <ion-col col-2.4 >
-              <img src="http://openweathermap.org/img/w/{{prognoza_segment[4].weather[0].icon}}.png"><br>
-              {{prognoza_segment[4].weather[0].description}}<br>
-              {{prognoza_segment[4].main.temp | number: '1.1-1'}} &#8451;<br>
-              {{prognoza_segment[4].dt_txt | date:'EEE'}},
-              {{prognoza_segment[4].dt_txt | date:'HH:mm'}} h
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-slide>
-    </ion-slides>
-  </div>
-
-  
+</ion-footer>
 
 </ion-content>

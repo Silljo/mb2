@@ -23,8 +23,7 @@ export class RegisterPage {
     this.auth.register(user.email, user.password).then(
       res => {
         //Dobili smo nešto natrag, i bilo je uspješno
-        this.auth.obrada_uspjesnog_logina(res).then(res => {
-          this.events.publish('user:signedIn', 'login');
+        this.auth.obrada_uspjesnog_logina(res.uid, res.email, res.photoURL, res.displayName).then(res => {
           this.navCtrl.setRoot(HomePage);
         });
         //

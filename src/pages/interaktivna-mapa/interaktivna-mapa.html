@@ -2,35 +2,37 @@
 
   <ion-navbar>
     <button ion-button menuToggle >
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon name="menu" color="bijela"></ion-icon>
     </button>
     <ion-title>Interaktivna mapa</ion-title>
+    <span class="navbar_small_subtitle">PREGLED SADRŽAJA NA PODRUČJU OPĆINE</span>
   </ion-navbar>
 
 </ion-header>
-
 
 <ion-content>
 
   <div #map id="map">
 
-    <ion-grid>
+  </div>
+
+  <ion-footer>
+    <ion-grid class="mapa_opcije">
       <ion-row class="row_mapa_show_hide">
         <ion-col col-3>Opće<br>
           <ion-checkbox color="blue" [(ngModel)]="markers_opcenito_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
         </ion-col>
         <ion-col col-3>Događanja<br>
-          <ion-checkbox color="red" [(ngModel)]="markers_dogadjanja_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
+          <ion-checkbox color="zelena" [(ngModel)]="markers_dogadjanja_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
         </ion-col>
         <ion-col col-3>Gastro<br>
-          <ion-checkbox color="green" [(ngModel)]="markers_gastro_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
+          <ion-checkbox color="roza" [(ngModel)]="markers_gastro_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
         </ion-col>
         <ion-col col-3>Smještaj<br>
-          <ion-checkbox color="orange" [(ngModel)]="markers_smjestaj_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
+          <ion-checkbox color="narandjasta" [(ngModel)]="markers_smjestaj_checkbox" (ionChange)="show_hide_markers()"></ion-checkbox>
         </ion-col>
-
       </ion-row>
     </ion-grid>
-  </div>
+  </ion-footer>
 
 </ion-content>
