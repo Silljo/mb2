@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -15,7 +15,7 @@ export class GastroDetaljiPage {
 
   id: any;
   tip: any;
-  gastro_detalji: FirebaseObjectObservable<any[]>;
+  gastro_detalji: any = {};
   adresa: string;
 	kontakt_email: string;
 	kontakt_mobitel:string;
@@ -44,9 +44,7 @@ export class GastroDetaljiPage {
 
     if(this.tip == 'hrana')
     {
-      this.gastro_detalji = db.object('/gastro_detalji_'+ this.tip +'/' + this.id);
-
-      this.gastro_detalji.subscribe(data => {
+      this.gastro_detalji = db.object('/gastro_detalji_'+ this.tip +'/' + this.id).valueChanges().subscribe((data) => {
           this.adresa = data['adresa'];
           this.kontakt_email = data['kontakt_email'];
           this.kontakt_mobitel = data['kontakt_mobitel'];
@@ -68,9 +66,7 @@ export class GastroDetaljiPage {
 
     if(this.tip == 'pice')
     {
-      this.gastro_detalji = db.object('/gastro_detalji_'+ this.tip +'/' + this.id);
-
-      this.gastro_detalji.subscribe(data => {
+      this.gastro_detalji = db.object('/gastro_detalji_'+ this.tip +'/' + this.id).valueChanges().subscribe((data) => {
           this.adresa = data['adresa'];
           this.kontakt_email = data['kontakt_email'];
           this.kontakt_mobitel = data['kontakt_mobitel'];
@@ -86,7 +82,6 @@ export class GastroDetaljiPage {
           this.radno_vrijeme_sati = data['radno_vrijeme_sati'];
           this.location_lat = data['location_lat'];
           this.location_lon = data['location_lon'];
-
       });
     }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'page-gastro',
@@ -14,8 +15,8 @@ export class GastroPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
 
-    this.gastro_hrana = db.list('/gastro_hrana/');
-    this.gastro_pice = db.list('/gastro_pice/');
+    this.gastro_hrana = db.list('/gastro_hrana/').valueChanges();;
+    this.gastro_pice = db.list('/gastro_pice/').valueChanges();;
     this.gastro = 'hrana';
 
   }

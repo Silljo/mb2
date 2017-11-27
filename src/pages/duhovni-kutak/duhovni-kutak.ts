@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'page-duhovni-kutak',
@@ -8,17 +9,11 @@ import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable 
 })
 export class DuhovniKutakPage {
 
-  duhovni_kutak_data = [];
+  duhovni_kutak_data: Observable<any[]>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
 
-
-    db.list("/duhovni_kutak/", {query:{orderByChild : "order_date"}}).subscribe((data) => {
-        this.duhovni_kutak_data = data;
-        console.log(this.duhovni_kutak_data);
-
-    });
-
+    this.duhovni_kutak_data = db.list("/duhovni_kutak/", ref => ref.orderByChild('order_date')).valueChanges();
 
   }
 

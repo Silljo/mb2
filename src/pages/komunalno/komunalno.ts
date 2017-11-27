@@ -4,7 +4,9 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as firebase from 'firebase';
 import { Storage } from '@ionic/storage';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'page-komunalno',
@@ -19,11 +21,20 @@ export class KomunalnoPage {
   slika_validation: string;
   uid: string;
   datum: String = new Date().toISOString();
-  prijave_komunalno_data = [];
+  prijave_komunalno_data: Observable<any[]>;
   komunalno_segment: any;
+  komunalni_redar = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private camera: Camera, private storage: Storage,
-              db: AngularFireDatabase) {
+              public db: AngularFireDatabase, public auth: AngularFireAuth) {
+
+    /*
+    STATUSI:
+    1 - Novi predmet salje se obavijest komunalnom redaru
+    2 - Poslana poruka komunalnom redaru
+    3 - Komunalni redar je oznacio da je vidio poruku i sanje povratnu informaciju korisniku
+    4 - Korisnik je dobio notifikaciju
+    */
 
     this.komunalno_segment = 'prijava';
 
@@ -35,8 +46,28 @@ export class KomunalnoPage {
       kontakt: ['', Validators.required],
     });
 
-    this.storage.get('uid').then((uid) => {
-      if(uid){db.list("/komunalno/", {query:{orderByChild : 'uid', equalTo: uid}}).subscribe((data) => {this.prijave_komunalno_data = data;});}
+    this.auth.authState.subscribe(data => {
+      if (data && data.uid) {
+
+        //E sad da prvo vidimo da li je to komunalni redar
+        this.db.object("/user_profiles/" + data.uid).valueChanges().subscribe((data_user) => {
+
+          if(data_user['komunalno'])
+          {
+            this.komunalno_segment = 'arhiva';
+            this.komunalni_redar = data_user['komunalno'];
+            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.limitToLast(50)).valueChanges();
+
+          }
+          else
+          {
+            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.orderByChild('uid').equalTo(data.uid)).valueChanges();
+          }
+          console.log(this.prijave_komunalno_data);
+        });
+
+
+      }
     });
 
 
@@ -55,27 +86,27 @@ export class KomunalnoPage {
     var kontakt = this.komunalno.value.kontakt;
     var hitnost = this.komunalno.value.hitnost;
 
-    this.storage.get('uid').then((uid) => {
+    this.auth.authState.subscribe(data => {
 
-      if(uid)
+      if(data.uid)
       {
-        var storageRef = firebase.storage().ref('/komunalno/');
+        var storageRef = firebase.storage().ref('komunalno/' + data.uid + '_' + Date.now());
 
         storageRef.putString(this.slika, firebase.storage.StringFormat.DATA_URL).then(function(snapshot) {
 
-          //var newPostKey = firebase.database().ref().child('komunalno').push().key;
+          var newPostKey = firebase.database().ref().child('komunalno').push().key;
 
-          firebase.database().ref('komunalno/').push({
-              status: 'Poslano',
+          firebase.database().ref('komunalno/' + newPostKey).set({
+              status: 1,
               image_url: snapshot.downloadURL,
               opis: opis,
               mjesto: mjesto,
               kontakt: kontakt,
               hitnost: hitnost,
-              uid: uid
+              uid: data.uid,
+              key: newPostKey
             });
 
-            alert("finito");
         });
       }
     });
@@ -115,6 +146,11 @@ export class KomunalnoPage {
       }
   }
 
-
+  azuriraj_status_komunalni_radnik(key)
+  {
+    firebase.database().ref('komunalno/' + key).update({
+        status: 3
+      });
+  }
 
 }

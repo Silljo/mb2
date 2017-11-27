@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import firebase from 'firebase';
+import { Observable } from 'rxjs/Rx';
 
 @IonicPage()
 @Component({
@@ -11,11 +12,11 @@ import firebase from 'firebase';
 
 export class SmjestajPage {
 
-  smjestaj: any = {};
+  smjestaj: Observable<any[]>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
 
-    this.smjestaj = db.list('/smjestaj/');
+    this.smjestaj = db.list('/smjestaj/').valueChanges();
 
   }
 

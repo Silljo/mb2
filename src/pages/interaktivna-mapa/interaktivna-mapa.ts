@@ -3,11 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ConnectivityServiceProvider } from '../../providers/connectivity-service/connectivity-service';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker, HtmlInfoWindow } from '@ionic-native/google-maps';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Rx';
 
-
-
-@IonicPage()
 @Component({
   selector: 'page-interaktivna-mapa',
   templateUrl: 'interaktivna-mapa.html',
@@ -32,10 +30,17 @@ export class InteraktivnaMapaPage {
   markers_gastro = [];
   markers_gastro_checkbox: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private googleMaps: GoogleMaps, db: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private googleMaps: GoogleMaps, public db: AngularFireDatabase) {
 
-    db.list('/interaktivna_mapa/').subscribe(podaci => { this.interaktivna_mapa_opcenito = podaci; });
-    db.list('/smjestaj_detalji/').subscribe(podaci => { this.interaktivna_mapa_smjestaj = podaci;  });
+
+    db.object("/interaktivna_mapa/").valueChanges().subscribe((data_opcenito) => {
+      this.interaktivna_mapa_opcenito = data_opcenito;
+    });
+
+
+    db.object("/smjestaj_detalji/").valueChanges().subscribe((data_smjestaj_detalji) => {
+      this.interaktivna_mapa_smjestaj = data_smjestaj_detalji;
+    });
 
   }
 
@@ -90,12 +95,17 @@ export class InteraktivnaMapaPage {
 
         //Filanje sa regularnim informacijama
         for (let item of this.interaktivna_mapa_opcenito) {
+
+          if(item)
+          {
+
           this.map.addMarker({
 
               icon: item.slika, animation: 'BOUNCE', zIndex: 9999,
               position: { lat: item.lat, lng: item.lng } }).then(marker => {
 
               this.markers_opcenito = this.markers_opcenito.concat(marker);
+
 
               marker.setTitle(item.naziv);
               marker.setSnippet(item.opis + "\nAdresa: " + item.adresa);
@@ -109,33 +119,37 @@ export class InteraktivnaMapaPage {
               });
 
             });
+
+          }
          }
 
          for (let item_smjestaj of this.interaktivna_mapa_smjestaj) {
 
-           this.map.addMarker({
+           if(item_smjestaj)
+           {
+             this.map.addMarker({
 
-               icon: item_smjestaj.interaktivna_mapa_slika, animation: 'BOUNCE', zIndex: 9999,
-               position: { lat: item_smjestaj.location_lat, lng: item_smjestaj.location_lon } }).then(marker => {
+                 icon: item_smjestaj.interaktivna_mapa_slika, animation: 'BOUNCE', zIndex: 9999,
+                 position: { lat: item_smjestaj.location_lat, lng: item_smjestaj.location_lon } }).then(marker => {
 
-               this.markers_smjestaj = this.markers_smjestaj.concat(marker);
+                 this.markers_smjestaj = this.markers_smjestaj.concat(marker);
 
-               marker.setTitle(item_smjestaj.naziv_objekta);
-               marker.setSnippet(item_smjestaj.opis + "\nAdresa: " + item_smjestaj.adresa);
+                 marker.setTitle(item_smjestaj.naziv_objekta);
+                 marker.setSnippet(item_smjestaj.opis + "\nAdresa: " + item_smjestaj.adresa);
 
-               //Kad se klikne
-               marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-                   //Pomakni kameru rotiraj
-                   marker.showInfoWindow();
-                   this.map.animateCamera({target: {lat: item_smjestaj.location_lat, lng: item_smjestaj.location_lon}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
-               });
+                 //Kad se klikne
+                 marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+                     //Pomakni kameru rotiraj
+                     marker.showInfoWindow();
+                     this.map.animateCamera({target: {lat: item_smjestaj.location_lat, lng: item_smjestaj.location_lon}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
+                 });
 
-               //Dugi klik na INFO
-               marker.on(GoogleMapsEvent.INFO_CLICK).subscribe(() => {
-                      this.navCtrl.push('SmjestajDetaljiPage', {id: item_smjestaj.id});
-                   });
-               });
-
+                 //Dugi klik na INFO
+                 marker.on(GoogleMapsEvent.INFO_CLICK).subscribe(() => {
+                        this.navCtrl.push('SmjestajDetaljiPage', {id: item_smjestaj.id});
+                     });
+                 });
+            }
 
           }
 
@@ -172,6 +186,5 @@ export class InteraktivnaMapaPage {
     }
 
   }
-
 
 }

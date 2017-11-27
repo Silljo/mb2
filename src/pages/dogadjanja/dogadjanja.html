@@ -32,7 +32,7 @@
 
     <div *ngSwitchCase="'kultura'" class="padding_custom">
       <timeline endIcon="">
-        <timeline-item *ngFor="let kultura of dogadjanja_kultura">
+        <timeline-item *ngFor="let kultura of dogadjanja_kultura | async">
           <timeline-time [title]="[kultura.datum, kultura.vrijeme]"></timeline-time>
           <ion-icon [name]="'calendar'"></ion-icon>
 
@@ -58,7 +58,7 @@
 
     <div *ngSwitchCase="'sport'" class="padding_custom">
       <timeline endIcon="">
-        <timeline-item *ngFor="let sport of dogadjanja_sport">
+        <timeline-item *ngFor="let sport of dogadjanja_sport | async">
           <timeline-time [title]="[sport.datum, sport.vrijeme]"></timeline-time>
           <ion-icon [name]="'calendar'"></ion-icon>
 
@@ -84,7 +84,7 @@
 
     <div *ngSwitchCase="'zabava'" class="padding_custom">
       <timeline endIcon="">
-        <timeline-item *ngFor="let zabava of dogadjanja_zabava">
+        <timeline-item *ngFor="let zabava of dogadjanja_zabava | async">
           <timeline-time [title]="[zabava.datum, zabava.vrijeme]"></timeline-time>
           <ion-icon [name]="'calendar'"></ion-icon>
 

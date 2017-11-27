@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -15,7 +15,7 @@ export class GalerijaPage {
 
   id: any;
   tip: string;
-  slike: FirebaseObjectObservable<any[]>;;
+  slike: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase) {
 
@@ -26,7 +26,7 @@ export class GalerijaPage {
     this.tip = 'smjestaj_detalji';
 
     //Ajmo po slike
-    db.object("/" + this.tip + "/" + this.id + "/galerija_slike").subscribe((data_slike) => {
+    db.object("/" + this.tip + "/" + this.id + "/galerija_slike").valueChanges().subscribe((data_slike) => {
         this.slike = data_slike;
         console.log(data_slike);
     });

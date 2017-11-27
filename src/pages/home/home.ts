@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Slides, Events } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginPage } from '../../pages/login/login';
 import { ApisProvider } from '../../providers/apis/apis';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import firebase from 'firebase';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import * as firebase from 'firebase';
+
 
 @Component({
   selector: 'page-home',
@@ -19,8 +20,8 @@ export class HomePage {
   user_img:string;
   username: string;
   podaci: any;
-  podaci_vrijeme: FirebaseObjectObservable<any[]>;
-  podaci_vrijeme_prognoza: FirebaseObjectObservable<any[]>;
+  podaci_vrijeme: any;
+  podaci_vrijeme_prognoza: any;
   podaci_vrijeme_data: any;
   vrijeme_slike: any;
   vrijeme_data_ikona: string;
@@ -29,28 +30,29 @@ export class HomePage {
   vrijeme_temp_max: string;
   vrijeme_temp_min: string;
   slika_pozadina: string;
+  token: any;
 
   prognoza: Array<any>;
 
   podaci_prognoza_formated: Array<any>;
 
   constructor(private afAuth: AngularFireAuth, private toast: ToastController,
-    public navCtrl: NavController, public navParams: NavParams, public api: ApisProvider, db: AngularFireDatabase) {
+    public navCtrl: NavController, public navParams: NavParams, public api: ApisProvider, public db: AngularFireDatabase, public events: Events) {
 
-
-    this.user_img = localStorage.getItem('photo');
-    this.username = localStorage.getItem('username');
-
-    this.podaci = db.object('/pocetna/');
+    this.podaci = this.db.object("/pocetna/").valueChanges().subscribe((data) => {
+      this.vrijeme_slike = data['slike_trenutno_vrijeme'];
+      this.slika_pozadina = data['slika_pozadina'];
+    });
+    /*this.podaci = db.object('/pocetna/');
 
     this.podaci.subscribe(data => {
       this.vrijeme_slike = data['slike_trenutno_vrijeme'];
       this.slika_pozadina = data['slika_pozadina'];
-    });
+    });*/
 
-    this.podaci_vrijeme = db.object('/weather/');
 
-    this.podaci_vrijeme.subscribe(data_vrijeme => {
+    /*this.podaci_vrijeme = db.object('/weather/');*/
+    this.podaci_vrijeme = this.db.object('/weather/').valueChanges().subscribe((data_vrijeme) => {
 
       this.podaci_vrijeme_data = JSON.parse(data_vrijeme['current'].data);
 

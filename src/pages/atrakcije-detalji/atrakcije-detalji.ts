@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -20,13 +20,12 @@ export class AtrakcijeDetaljiPage {
   atrakcija_slika_main: string;
   atrakcija_slika_galerija: string;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
 
     this.id = navParams.get('id');
     this.id = 1
-    this.atrakcije_detalji = db.object('/atrakcije/'+ this.id);
-
-    this.atrakcije_detalji.subscribe(data => {
+    this.atrakcije_detalji = db.object('/atrakcije/'+ this.id).valueChanges().subscribe((data) => {
       this.atrakcija_naziv = data['naziv'];
       this.atrakcija_opis = data['opis_long'];
       this.atrakcija_opis_short = data['opis_short'];

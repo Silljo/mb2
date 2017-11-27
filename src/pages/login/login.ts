@@ -20,7 +20,7 @@ export class LoginPage {
 
   constructor(private afAuth: AngularFireAuth,
     public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public facebook: Facebook, public events: Events) {
-      localStorage.clear();
+
   }
 
   //Email
@@ -29,9 +29,10 @@ export class LoginPage {
     this.auth.login(user.email, user.password).then(
       res => {
         //Dobili smo nešto natrag, i bilo je uspješno
-        this.auth.obrada_uspjesnog_logina(res.uid, res.email, res.photoURL, res.displayName).then(res => {
-          this.navCtrl.setRoot(HomePage);
-        });
+        this.auth.obrada_uspjesnog_logina(res.uid, res.email, res.photoURL, res.displayName).then(
+          (finish) => this.navCtrl.setRoot(HomePage),
+          (error) => alert("Greška"),
+        );
         //
         //
       }, err => {
@@ -58,19 +59,18 @@ export class LoginPage {
           .credential(response.authResponse.accessToken);
 
            firebase.auth().signInWithCredential(facebookCredential)
-          .then((success) => {
-              this.auth.obrada_uspjesnog_logina(success.uid, success.email, success.photoURL, success.displayName).then(res => {
-                this.navCtrl.setRoot(HomePage);
-              });
+            .then((success) => {
+              this.auth.obrada_uspjesnog_logina(success.uid, success.email, success.photoURL, success.displayName).then(
+                (finish) => this.navCtrl.setRoot(HomePage),
+                (error) => alert("Greška")
+              );
           })
           .catch((error) => {
               alert("Firebase failure: " + JSON.stringify(error));
           });
 
-      }).catch((error) => { alert(JSON.stringify(error));  });
+      }).catch((error) => { alert('Loše ' + error);  });
 
   }
-
-
 
 }

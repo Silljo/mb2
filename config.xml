@@ -104,4 +104,5 @@
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAQl2ZWgXTMydXdtRZuGMdjyw07pKv02Vc" />
         <variable name="API_KEY_FOR_IOS" value="AIzaSyA94aPEJXN0iof_xYzqPlMbewvsEbZNdxw" />
     </plugin>
+    <plugin name="cordova-plugin-firebase" spec="^0.1.24" />
 </widget>

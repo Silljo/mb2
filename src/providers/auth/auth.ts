@@ -3,9 +3,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { ToastController } from 'ionic-angular';
 import { LocalStorageProvider } from '../local-storage/local-storage';
 import { Storage } from '@ionic/storage';
-import { FCM } from '@ionic-native/fcm';
-
-import firebase from 'firebase';
+import { Firebase } from '@ionic-native/firebase';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthProvider {
@@ -17,7 +16,7 @@ export class AuthProvider {
   user_name: string;
   fb_response: any;
 
-  constructor(private afAuth: AngularFireAuth, private toastCtrl: ToastController, private storage: Storage, private fcm: FCM) {
+  constructor(private afAuth: AngularFireAuth, private toastCtrl: ToastController, private storage: Storage, public firebase_plugin: Firebase) {
 
   }
 
@@ -28,15 +27,10 @@ export class AuthProvider {
   async obrada_uspjesnog_logina(uid, email, photo, naziv)
   {
 
-    this.fcm.subscribeToTopic('test_topic');
-
-    this.fcm.getToken().then(token=>{
-      console.log(token);
-    })
-
     //Ovdje piknemo da vidimo da li postoji u bazi
     var ref_profle = firebase.database().ref("/user_profiles/");
-    ref_profle.once('value').then(function(dataSnapshot) {
+
+    await ref_profle.once('value').then(function(dataSnapshot) {
 
       //Ako ne postoji e onda ga spremamo
       if (!dataSnapshot.hasChild(uid)) {
@@ -51,18 +45,10 @@ export class AuthProvider {
             display_name: naziv
         });
 
-        //I treba ga subscrajbati na sve topice
-        this.fcm.subscribeToTopic('test_topic');
       }
-
     });
 
-    await this.storage.set('uid', this.uid);
-    await this.storage.set('e_mail', this.e_mail);
-    await this.storage.set('photo_url', this.photo_url);
-    await this.storage.set('user_name', this.user_name);
 
-    return;
 
   }
 

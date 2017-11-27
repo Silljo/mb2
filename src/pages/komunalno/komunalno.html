@@ -11,9 +11,9 @@
 </ion-header>
 
 
-<ion-content padding>
-
-  <ion-segment [(ngModel)]="komunalno_segment" color="plava">
+<ion-content>
+  <br>
+  <ion-segment class="segment_class" [(ngModel)]="komunalno_segment" color="plava">
 
     <ion-segment-button value="prijava">
       <ion-icon name="ios-warning" color="plava"></ion-icon>
@@ -76,7 +76,8 @@
   </div>
 
     <div *ngSwitchCase="'arhiva'">
-      <ion-card *ngFor="let prijave of prijave_komunalno_data" class="no_padding">
+      <ion-card *ngFor="let prijave of prijave_komunalno_data | async" class="no_padding">
+
         <ion-item>
           <h2>Hitnost: {{prijave.hitnost}}</h2>
           <h4>Mjesto: {{prijave.mjesto}}</h4>
@@ -86,8 +87,21 @@
         <img src="{{prijave.image_url}}"/>
 
         <ion-card-content>
-          <p>Kontakt: {{prijave.kontakt}}</p><br>
+          <p>Kontakt: {{prijave.kontakt}}</p>
           <p>Opis: {{prijave.opis}}</p>
+
+          <p *ngIf="komunalni_redar">
+            <br>
+          <button class="span_komunalno_ikona" full *ngIf="prijave.status == 2" ion-button item-end icon-left color="crvena" (click)="azuriraj_status_komunalni_radnik(prijave.key)">
+            <ion-icon name="md-checkbox-outline"></ion-icon>Označi prijavu kao obrađenu
+          </button>
+
+          <button class="span_komunalno_ikona" full *ngIf="prijave.status == 4" ion-button item-end icon-left color="zelena">
+            <ion-icon name="md-checkbox-outline"></ion-icon>Prijava obrađena
+          </button>
+            <br>
+          </p>
+
         </ion-card-content>
       </ion-card>
     </div>

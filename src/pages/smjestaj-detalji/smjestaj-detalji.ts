@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import firebase from 'firebase';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -14,7 +14,7 @@ export class SmjestajDetaljiPage {
 
 
   id: any;
-  smjestaj: FirebaseObjectObservable<any[]>;
+  smjestaj: any = {};
   adresa: string;
 	kontakt_email: string;
 	kontakt_mobitel:string;
@@ -36,9 +36,7 @@ export class SmjestajDetaljiPage {
 
     this.id = navParams.get('id');
 
-    this.smjestaj = db.object('/smjestaj_detalji/' + this.id);
-
-    this.smjestaj.subscribe(data => {
+    this.smjestaj = db.object('/smjestaj_detalji/' + this.id).valueChanges().subscribe((data) => {
         this.adresa = data['adresa'];
         this.kontakt_email = data['kontakt_email'];
         this.kontakt_mobitel = data['kontakt_mobitel'];

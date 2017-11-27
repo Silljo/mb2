@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule }from 'angularfire2/auth';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 
 import { MyApp } from './app.component';
 import { FIREBASE_CONFIG } from "./app.firebase.config";
@@ -33,11 +33,12 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { ApisProvider } from '../providers/apis/apis';
 import { HttpModule } from '@angular/http';
 import { Camera } from '@ionic-native/camera';
-import { FCM } from '@ionic-native/fcm';
+import { Firebase } from '@ionic-native/firebase';
 
 import { TimelineComponent } from '../components/timeline/timeline';
 import { TimelineTimeComponent } from '../components/timeline/timeline';
 import { TimelineItemComponent } from '../components/timeline/timeline';
+
 
 @NgModule({
   declarations: [
@@ -92,7 +93,7 @@ import { TimelineItemComponent } from '../components/timeline/timeline';
     GoogleMaps,
     ApisProvider,
     Camera,
-    FCM
+    Firebase
   ]
 })
 export class AppModule {}

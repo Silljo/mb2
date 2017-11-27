@@ -15,7 +15,7 @@
 
 
   <timeline endIcon="">
-    <timeline-item *ngFor="let duhovni_kutak of duhovni_kutak_data">
+    <timeline-item *ngFor="let duhovni_kutak of duhovni_kutak_data | async">
       <timeline-time [title]="[duhovni_kutak.datum, duhovni_kutak.vrijeme]"></timeline-time>
       <ion-icon [name]="'calendar'"></ion-icon>
 
