@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ToastController } from 'ionic-angular';
-import { LocalStorageProvider } from '../local-storage/local-storage';
-import { Storage } from '@ionic/storage';
 import { Firebase } from '@ionic-native/firebase';
 import * as firebase from 'firebase';
 
@@ -16,7 +14,7 @@ export class AuthProvider {
   user_name: string;
   fb_response: any;
 
-  constructor(private afAuth: AngularFireAuth, private toastCtrl: ToastController, private storage: Storage, public firebase_plugin: Firebase) {
+  constructor(private afAuth: AngularFireAuth, private toastCtrl: ToastController, public firebase_plugin: Firebase) {
 
   }
 
@@ -26,7 +24,6 @@ export class AuthProvider {
 
   async obrada_uspjesnog_logina(uid, email, photo, naziv)
   {
-
     //Ovdje piknemo da vidimo da li postoji u bazi
     var ref_profle = firebase.database().ref("/user_profiles/");
 
@@ -42,7 +39,23 @@ export class AuthProvider {
             uid: uid,
             email: email,
             slika: photo,
-            display_name: naziv
+            display_name: naziv,
+            subscribe_init: false,
+            subscribe_dogadjanja: 1,
+            subscribe_smjestaj: 1,
+            subscribe_gastro: 1,
+            subscribe_duhovni_kutak: 1
+        });
+
+        var user = firebase.auth().currentUser;
+
+        user.updateProfile({
+          displayName: naziv,
+          photoURL: photo
+        }).then(function() {
+          // Update successful.
+        }).catch(function(error) {
+          // An error happened.
         });
 
       }
@@ -50,6 +63,28 @@ export class AuthProvider {
 
 
 
+  }
+
+  subscribe_topics()
+  {
+
+    var userId = firebase.auth().currentUser.uid;
+    var obj = this;
+
+    firebase.database().ref('/user_profiles/' + userId).once('value').then(function(snapshot) {
+
+      if(snapshot.val() && snapshot.val().subscribe_init == false)
+      {
+        obj.firebase_plugin.subscribe('topic_dogadjanja');
+        obj.firebase_plugin.subscribe('topic_smjestaj');
+        obj.firebase_plugin.subscribe('topic_gastro');
+        obj.firebase_plugin.subscribe('topic_duhovni_kutak');
+
+        firebase.database().ref('/user_profiles/' + userId).update({
+            subscribe_init: true
+        });
+      }
+    });
   }
 
   obrada_neuspjesnog_logina(data)

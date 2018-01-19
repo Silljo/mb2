@@ -14,7 +14,7 @@ page-smjestaj-detalji {
     width: 100%;
     height: 400px;
     background-repeat: no-repeat;
-    background-position: center right;
+    background-position: center;
     background-size: cover;
   }
 
@@ -24,7 +24,7 @@ page-smjestaj-detalji {
   	top: 286px;
   	width: 100%;
     height: 114px;
-  	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  	background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5));
   	font: 150%/1.6 sans-serif;
   	text-align: center;
     padding-top: 20px;
@@ -36,14 +36,14 @@ page-smjestaj-detalji {
     font-weight: 350;
     display: block;
     padding-top: 25px;
-    color: #F7A54B;
+    color: $narandjasta_boja;
   }
 
   .adresa
   {
     font-size: 0.6em;
     font-weight: 200;
-    color: #F7A54B;
+    color: $narandjasta_boja;
   }
 
   .grid_ponuda
@@ -95,7 +95,9 @@ page-smjestaj-detalji {
   .galerija_icon
   {
     font-size: 3em;
-    opacity: .5;
+    opacity: .8;
+    color: $narandjasta_boja;
+
   }
 
   .galerija_div
@@ -109,31 +111,55 @@ page-smjestaj-detalji {
   {
     background-color: #EEE;
     text-align: center;
-    color: #F7A54B;
+    color: $narandjasta_boja;
     font-size: 1.5em;
   }
 
   .info_icon
   {
     font-size: 1.2em !important;
-    color: #F7A54B;
+    color: $narandjasta_boja;
   }
 
   .icon_list
   {
-    color: #F7A54B;
+    color: $narandjasta_boja;
     font-size: 2.5em !important;
   }
 
   .pull
   {
     font-size: 0.5em !important;
-    color: #F7A54B;
+    color: $narandjasta_boja;
   }
 
   .kontakt_link
   {
     width: 45px;
   }
+
+  .item_recenzija
+  {
+    background-color: #EEE;
+    padding-right: 0px;
+  }
+  
+  .card-content-md {
+    padding: 0px 16px;
+  }
+
+
+
+
+  .item-md.item-block .item-inner {
+    padding-right: 0px;
+  }
+
+  .item-inner, ion-item {
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+
 
 }

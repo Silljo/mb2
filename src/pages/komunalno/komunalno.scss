@@ -1,16 +1,22 @@
 page-komunalno {
 
-  .segment-md-secondary .segment-button {
-    color: $plava_boja;
-    border-bottom-width: 3px !important;
-    border-bottom-style: solid !important;
-  }
-
-  .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
+  .segment-button.activated, .segment-md .segment-button.segment-activated {
     border-color: $plava_boja !important;
-    color: $plava_boja;
 
   }
+
+  .segment-ios-plava .segment-button.segment-activated {
+    .icon-ios-plava {
+      color: #FFF;
+    }
+  }
+
+
+  .navbar_small_subtitle{
+    position: inherit;
+
+  }
+
 
   .segment-md .segment-button {
     border-bottom-color: rgba(39, 121, 61, 0.2) !important;
@@ -41,5 +47,9 @@ page-komunalno {
     width: 100;
   }
 
+  .icon_ok
+  {
+    font-size: 3rem;
+  }
 
 }

@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, IonicPage } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as firebase from 'firebase';
-import { Storage } from '@ionic/storage';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Rx';
+import { DatePipe } from '@angular/common';
 
+
+@IonicPage()
 @Component({
   selector: 'page-komunalno',
   templateUrl: 'komunalno.html',
 })
-
 
 export class KomunalnoPage {
 
@@ -25,8 +26,8 @@ export class KomunalnoPage {
   komunalno_segment: any;
   komunalni_redar = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private camera: Camera, private storage: Storage,
-              public db: AngularFireDatabase, public auth: AngularFireAuth) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private camera: Camera,
+              public db: AngularFireDatabase, public auth: AngularFireAuth, private datePipe: DatePipe, public loadingCtrl: LoadingController) {
 
     /*
     STATUSI:
@@ -56,12 +57,13 @@ export class KomunalnoPage {
           {
             this.komunalno_segment = 'arhiva';
             this.komunalni_redar = data_user['komunalno'];
-            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.limitToLast(50)).valueChanges();
-
+            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.limitToLast(20).orderByChild('datum_order')).valueChanges();
+            
           }
           else
           {
-            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.orderByChild('uid').equalTo(data.uid)).valueChanges();
+            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.limitToLast(20).orderByChild('datum_order')).valueChanges();
+
           }
           console.log(this.prijave_komunalno_data);
         });
@@ -81,10 +83,21 @@ export class KomunalnoPage {
 
   logForm(){
 
+    let loading = this.loadingCtrl.create({
+      content: 'Slanje prijave, molim pričekajte...'
+    });
+
+    loading.present();
+
     var opis = this.komunalno.value.opis;
     var mjesto = this.komunalno.value.mjesto;
     var kontakt = this.komunalno.value.kontakt;
     var hitnost = this.komunalno.value.hitnost;
+    var datum = new Date();
+    var datum_order = this.datePipe.transform(datum, 'yyyyMMddHHmm');
+    var datum_formated = this.datePipe.transform(datum, 'dd.MM.yyyy. HH:mm');
+
+    this.komunalno.reset();
 
     this.auth.authState.subscribe(data => {
 
@@ -104,11 +117,18 @@ export class KomunalnoPage {
               kontakt: kontakt,
               hitnost: hitnost,
               uid: data.uid,
-              key: newPostKey
+              key: newPostKey,
+              datum_order: datum_order,
+              datum_prijave: datum_formated
             });
+
+            loading.dismiss();
 
         });
       }
+
+      this.slika = '';
+
     });
 
   }

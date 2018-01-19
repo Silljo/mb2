@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, Events } from 'ionic-angular';
 import { ConnectivityServiceProvider } from '../../providers/connectivity-service/connectivity-service';
-import { Geolocation } from '@ionic-native/geolocation';
-import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker, HtmlInfoWindow } from '@ionic-native/google-maps';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs/Rx';
+import { GoogleMaps, GoogleMap, GoogleMapsEvent, CameraPosition } from '@ionic-native/google-maps';
+import { AngularFireDatabase } from 'angularfire2/database';
 
+@IonicPage()
 @Component({
   selector: 'page-interaktivna-mapa',
   templateUrl: 'interaktivna-mapa.html',
@@ -17,6 +16,12 @@ export class InteraktivnaMapaPage {
 
   interaktivna_mapa_opcenito: any = {};
   interaktivna_mapa_smjestaj: any = {};
+  interaktivna_mapa_dogadjanja_sport: any = {};
+  interaktivna_mapa_dogadjanja_zabava: any = {};
+  interaktivna_mapa_dogadjanja_kultura: any = {};
+  interaktivna_mapa_gastro_pice: any = {};
+  interaktivna_mapa_gastro_hrana: any = {};
+  interaktivna_mapa_atrakcije: any = {};
 
   markers_opcenito = [];
   markers_opcenito_checkbox: boolean = true;
@@ -30,16 +35,43 @@ export class InteraktivnaMapaPage {
   markers_gastro = [];
   markers_gastro_checkbox: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private googleMaps: GoogleMaps, public db: AngularFireDatabase) {
+  markers_atrakcije = [];
+  markers_atrakcije_checkbox: boolean = true;
 
+  stop = false;
+
+  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public db: AngularFireDatabase, public loadingCtrl: LoadingController,public events: Events) {
 
     db.object("/interaktivna_mapa/").valueChanges().subscribe((data_opcenito) => {
       this.interaktivna_mapa_opcenito = data_opcenito;
     });
 
-
     db.object("/smjestaj_detalji/").valueChanges().subscribe((data_smjestaj_detalji) => {
       this.interaktivna_mapa_smjestaj = data_smjestaj_detalji;
+    });
+
+    db.object("/dogadjanja_sport/").valueChanges().subscribe((data_dogadjanja_sport) => {
+      this.interaktivna_mapa_dogadjanja_sport = data_dogadjanja_sport;
+    });
+
+    db.object("/dogadjanja_zabava/").valueChanges().subscribe((data_dogadjanja_zabava) => {
+      this.interaktivna_mapa_dogadjanja_zabava = data_dogadjanja_zabava;
+    });
+
+    db.object("/dogadjanja_kultura/").valueChanges().subscribe((data_dogadjanja_kultura) => {
+      this.interaktivna_mapa_dogadjanja_kultura = data_dogadjanja_kultura;
+    });
+
+    db.object("/gastro_detalji_hrana/").valueChanges().subscribe((data_gastro_detalji_hrana) => {
+      this.interaktivna_mapa_gastro_hrana = data_gastro_detalji_hrana;
+    });
+
+    db.object("/gastro_detalji_pice/").valueChanges().subscribe((data_gastro_detalji_pice) => {
+      this.interaktivna_mapa_gastro_pice = data_gastro_detalji_pice;
+    });
+
+    db.object("/atrakcije/").valueChanges().subscribe((data_atrakcije) => {
+      this.interaktivna_mapa_atrakcije = data_atrakcije;
     });
 
   }
@@ -48,14 +80,30 @@ export class InteraktivnaMapaPage {
    this.loadMap();
   }
 
+  ionViewDidLeave()
+  {
+
+
+  }
+
  loadMap() {
     this.mapElement = document.getElementById('map');
     this.map = this.googleMaps.create(this.mapElement);
 
-    // Wait the MAP_READY before using any methods.
-    this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+    var obj = this;
 
-        var label = document.getElementById("label");
+    let loading = this.loadingCtrl.create({
+      content: 'Dohvaćam sadržaj, molim pričekajte...'
+    });
+
+    loading.present();
+
+    this.events.subscribe('test', () => {
+      loading.dismiss();
+    });
+
+    // Wait the MAP_READY before using any methods.
+    this.map.one(GoogleMapsEvent.MAP_READY).then((obj) => {
 
         this.map.setOptions({
           'mapType': 'MAP_TYPE_SATELLITE',
@@ -85,7 +133,7 @@ export class InteraktivnaMapaPage {
             'padding': {
               'left': 5,
               'top': 60,
-              'bottom': 60,
+              'bottom': 70,
               'right': 5
             }
           }
@@ -101,18 +149,16 @@ export class InteraktivnaMapaPage {
 
           this.map.addMarker({
 
-              icon: item.slika, animation: 'BOUNCE', zIndex: 9999,
+              icon: {url: item.slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 1,
               position: { lat: item.lat, lng: item.lng } }).then(marker => {
 
               this.markers_opcenito = this.markers_opcenito.concat(marker);
-
 
               marker.setTitle(item.naziv);
               marker.setSnippet(item.opis + "\nAdresa: " + item.adresa);
 
               //Kad se klikne
               marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-
                   //Pomakni kameru rotiraj
                   marker.showInfoWindow();
                   this.map.animateCamera({target: {lat: item.lat, lng: item.lng}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
@@ -127,9 +173,10 @@ export class InteraktivnaMapaPage {
 
            if(item_smjestaj)
            {
+
              this.map.addMarker({
 
-                 icon: item_smjestaj.interaktivna_mapa_slika, animation: 'BOUNCE', zIndex: 9999,
+               icon: {url: item_smjestaj.interaktivna_mapa_slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 0,
                  position: { lat: item_smjestaj.location_lat, lng: item_smjestaj.location_lon } }).then(marker => {
 
                  this.markers_smjestaj = this.markers_smjestaj.concat(marker);
@@ -153,7 +200,186 @@ export class InteraktivnaMapaPage {
 
           }
 
+          for (let item_pice of this.interaktivna_mapa_gastro_pice) {
+
+            if(item_pice)
+            {
+              this.map.addMarker({
+
+                  icon: {url: item_pice.interaktivna_mapa_slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 0,
+                  position: { lat: item_pice.location_lat, lng: item_pice.location_lon } }).then(marker => {
+
+                    if(this.stop == true)
+                    {
+                      return;
+                    }
+
+                  this.markers_gastro = this.markers_gastro.concat(marker);
+
+                  marker.setTitle(item_pice.naziv_objekta);
+                  marker.setSnippet(item_pice.opis + "\nAdresa: " + item_pice.adresa);
+
+                  //Kad se klikne
+                  marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+                      //Pomakni kameru rotiraj
+                      marker.showInfoWindow();
+                      this.map.animateCamera({target: {lat: item_pice.location_lat, lng: item_pice.location_lon}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
+                  });
+
+                  //Dugi klik na INFO
+                  marker.on(GoogleMapsEvent.INFO_CLICK).subscribe(() => {
+                         this.navCtrl.push('GastroDetaljiPage', {id: item_pice.id, tip: 'pice'});
+                      });
+                  });
+             }
+
+           }
+
+           for (let item_hrana of this.interaktivna_mapa_gastro_hrana) {
+
+             if(item_hrana)
+             {
+               this.map.addMarker({
+
+                   icon: {url: item_hrana.interaktivna_mapa_slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 0,
+                   position: { lat: item_hrana.location_lat, lng: item_hrana.location_lon } }).then(marker => {
+
+                   this.markers_gastro = this.markers_gastro.concat(marker);
+
+                   marker.setTitle(item_hrana.naziv_objekta);
+                   marker.setSnippet(item_hrana.opis + "\nAdresa: " + item_hrana.adresa);
+
+                   //Kad se klikne
+                   marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+                       //Pomakni kameru rotiraj
+                       marker.showInfoWindow();
+                       this.map.animateCamera({target: {lat: item_hrana.location_lat, lng: item_hrana.location_lon}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
+                   });
+
+                   //Dugi klik na INFO
+                   marker.on(GoogleMapsEvent.INFO_CLICK).subscribe(() => {
+                          this.navCtrl.push('GastroDetaljiPage', {id: item_hrana.id, tip: 'hrana'});
+                       });
+                   });
+              }
+
+            }
+
+          for (let item_dogadjanja_sport of this.interaktivna_mapa_dogadjanja_sport) {
+
+            if(item_dogadjanja_sport)
+            {
+              this.map.addMarker({
+
+                  icon: {url: item_dogadjanja_sport.interaktivna_mapa_slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 2,
+                  position: { lat: item_dogadjanja_sport.location_lat, lng: item_dogadjanja_sport.location_lon } }).then(marker => {
+
+                    this.markers_dogadjanja = this.markers_dogadjanja.concat(marker);
+
+                    marker.setTitle(item_dogadjanja_sport.naziv);
+                    marker.setSnippet(item_dogadjanja_sport.opis + "\nLokacija: " + item_dogadjanja_sport.lokacija);
+
+                    //Kad se klikne
+                    marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+                        //Pomakni kameru rotiraj
+                        marker.showInfoWindow();
+                        this.map.animateCamera({target: {lat: item_dogadjanja_sport.location_lat, lng: item_dogadjanja_sport.location_lon}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
+                    });
+
+                  });
+             }
+
+           }
+
+           for (let item_dogadjanja_zabava of this.interaktivna_mapa_dogadjanja_zabava) {
+
+             if(item_dogadjanja_zabava)
+             {
+               this.map.addMarker({
+
+                   icon: {url: item_dogadjanja_zabava.interaktivna_mapa_slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 2,
+                   position: { lat: item_dogadjanja_zabava.location_lat, lng: item_dogadjanja_zabava.location_lon } }).then(marker => {
+
+                     this.markers_dogadjanja = this.markers_dogadjanja.concat(marker);
+
+                     marker.setTitle(item_dogadjanja_zabava.naziv);
+                     marker.setSnippet(item_dogadjanja_zabava.opis + "\nLokacija: " + item_dogadjanja_zabava.lokacija);
+
+                     //Kad se klikne
+                     marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+                         //Pomakni kameru rotiraj
+                         marker.showInfoWindow();
+                         this.map.animateCamera({target: {lat: item_dogadjanja_zabava.location_lat, lng: item_dogadjanja_zabava.location_lon}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
+                     });
+
+                   });
+              }
+
+            }
+
+            for (let item_dogadjanja_kultura of this.interaktivna_mapa_dogadjanja_kultura) {
+
+              if(item_dogadjanja_kultura)
+              {
+                this.map.addMarker({
+
+                    icon: {url: item_dogadjanja_kultura.interaktivna_mapa_slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 2,
+                    position: { lat: item_dogadjanja_kultura.location_lat, lng: item_dogadjanja_kultura.location_lon } }).then(marker => {
+
+                      this.markers_dogadjanja = this.markers_dogadjanja.concat(marker);
+
+                      marker.setTitle(item_dogadjanja_kultura.naziv);
+                      marker.setSnippet(item_dogadjanja_kultura.opis + "\nLokacija: " + item_dogadjanja_kultura.lokacija);
+
+                      //Kad se klikne
+                      marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+                          //Pomakni kameru rotiraj
+                          marker.showInfoWindow();
+                          this.map.animateCamera({target: {lat: item_dogadjanja_kultura.location_lat, lng: item_dogadjanja_kultura.location_lon}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
+                      });
+
+                    });
+               }
+
+             }
+
+             for (let item_atrakcije of this.interaktivna_mapa_atrakcije) {
+
+               if(item_atrakcije)
+               {
+                 this.map.addMarker({
+
+                     icon: {url: item_atrakcije.interaktivna_mapa_slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 2,
+                     position: { lat: item_atrakcije.location_lat, lng: item_atrakcije.location_lon } }).then(marker => {
+
+                       this.events.publish('test');
+
+                       this.markers_atrakcije = this.markers_atrakcije.concat(marker);
+
+                       marker.setTitle(item_atrakcije.naziv);
+                       marker.setSnippet("Za više detalja pritisnite ovdje.");
+
+                       //Kad se klikne
+                       marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+                           //Pomakni kameru rotiraj
+                           marker.showInfoWindow();
+                           this.map.animateCamera({target: {lat: item_atrakcije.location_lat, lng: item_atrakcije.location_lon}, zoom: 17, tilt: 60, bearing: 140, duration: 1500});
+                       });
+
+                       //Dugi klik na INFO
+                       marker.on(GoogleMapsEvent.INFO_CLICK).subscribe(() => {
+                              this.navCtrl.push('AtrakcijeDetaljiPage', {id: item_atrakcije.id});
+                           });
+
+                     });
+                }
+
+              }
+
+
+
       });
+
   }
 
   show_hide_markers(value)
@@ -181,6 +407,45 @@ export class InteraktivnaMapaPage {
     else
     {
       this.markers_smjestaj.forEach(item => {
+        item.setVisible(true);
+      });
+    }
+
+    if(!this.markers_dogadjanja_checkbox)
+    {
+      this.markers_dogadjanja.forEach(item => {
+        item.setVisible(false);
+      });
+    }
+    else
+    {
+      this.markers_dogadjanja.forEach(item => {
+        item.setVisible(true);
+      });
+    }
+
+    if(!this.markers_gastro_checkbox)
+    {
+      this.markers_gastro.forEach(item => {
+        item.setVisible(false);
+      });
+    }
+    else
+    {
+      this.markers_gastro.forEach(item => {
+        item.setVisible(true);
+      });
+    }
+
+    if(!this.markers_atrakcije_checkbox)
+    {
+      this.markers_atrakcije.forEach(item => {
+        item.setVisible(false);
+      });
+    }
+    else
+    {
+      this.markers_atrakcije.forEach(item => {
         item.setVisible(true);
       });
     }

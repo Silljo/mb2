@@ -17,13 +17,8 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { SmjestajPage } from '../pages/smjestaj/smjestaj';
-import { GastroPage } from '../pages/gastro/gastro';
-import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
-import { InteraktivnaMapaPage } from '../pages/interaktivna-mapa/interaktivna-mapa';
-import { AtrakcijePage } from '../pages/atrakcije/atrakcije';
 import { DuhovniKutakPage } from '../pages/duhovni-kutak/duhovni-kutak';
-import { KomunalnoPage } from '../pages/komunalno/komunalno';
+import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
 
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -34,10 +29,12 @@ import { ApisProvider } from '../providers/apis/apis';
 import { HttpModule } from '@angular/http';
 import { Camera } from '@ionic-native/camera';
 import { Firebase } from '@ionic-native/firebase';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { TimelineComponent } from '../components/timeline/timeline';
 import { TimelineTimeComponent } from '../components/timeline/timeline';
 import { TimelineItemComponent } from '../components/timeline/timeline';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -45,16 +42,12 @@ import { TimelineItemComponent } from '../components/timeline/timeline';
     MyApp,
     HomePage,
     LoginPage,
-    SmjestajPage,
-    GastroPage,
-    DogadjanjaPage,
-    InteraktivnaMapaPage,
-    AtrakcijePage,
-    DuhovniKutakPage,
     TimelineComponent,
     TimelineItemComponent,
     TimelineTimeComponent,
-    KomunalnoPage
+    DogadjanjaPage,
+    DuhovniKutakPage,
+
   ],
   imports: [
     BrowserModule,
@@ -70,13 +63,9 @@ import { TimelineItemComponent } from '../components/timeline/timeline';
     MyApp,
     HomePage,
     LoginPage,
-    SmjestajPage,
-    GastroPage,
     DogadjanjaPage,
-    InteraktivnaMapaPage,
-    AtrakcijePage,
     DuhovniKutakPage,
-    KomunalnoPage
+    
   ],
   providers: [
     StatusBar,
@@ -93,7 +82,9 @@ import { TimelineItemComponent } from '../components/timeline/timeline';
     GoogleMaps,
     ApisProvider,
     Camera,
-    Firebase
+    Firebase,
+    LocalNotifications,
+    DatePipe
   ]
 })
 export class AppModule {}

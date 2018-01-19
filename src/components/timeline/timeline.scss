@@ -37,7 +37,7 @@
        width: 75% !important;
        position: relative;
      }
-     ion-icon {
+     .ion-icon_class {
        width: 40px;
        height: 40px;
        font-size: 1.8em;
@@ -67,7 +67,7 @@
      }
        &:last-child{
          width: 100%;
-         ion-icon{
+         .ion-icon_class{
            box-shadow: none;
            &:after{
              border-width: 0;
@@ -92,7 +92,7 @@
          margin-left: 80px !important;
          width: 82% !important;
        }
-       ion-icon{
+       .ion-icon_class{
          left: 30px;
        }
        timeline-time{
@@ -115,7 +115,7 @@
        &:last-child{
          visibility: hidden;
        }
-       ion-icon{
+       .ion-icon_class{
          display: none;
          position: relative;
          float: right;

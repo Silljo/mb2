@@ -1,27 +1,29 @@
-<ion-header>
 
-  <ion-navbar color="primary">
-    <ion-title>Login</ion-title>
-  </ion-navbar>
+<ion-content padding class="login_content">
 
-</ion-header>
+  <fieldset class="login_forma">
+
+    <legend class="legend_login"></legend>
+      <br><br>
+      <ion-item no-lines>
+        <ion-label class="labels"><ion-icon color="zelena" name="md-mail"></ion-icon></ion-label>
+        <ion-input class="input_login" type="email" text-left placeholder="E-mail adresa" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+      <br>
+      <ion-item no-lines>
+        <ion-label class="labels"><ion-icon color="zelena" name="md-lock"></ion-icon></ion-label>
+        <ion-input class="input_login" text-left type="password" placeholder="Lozinka" [(ngModel)]="user.password"></ion-input>
+      </ion-item>
+      <div class="login_button_wraper">
+        <button class="button_forma" ion-button round block color="zelena" (click)="login(user)">Prijavi se</button>
+        <hr>
+        <button class="button_forma" ion-button round block icon-start color="facebook_plava" (click)="fb_login()"> <ion-icon name="logo-facebook"></ion-icon> Facebook prijava</button>
+      </div>
+      <div class="footer_login">
+        Nemate korisnički račun? Registrirati se možete <span class="span_ovdje" (click)="register()">ovdje.</span>
+      </div>
 
 
-<ion-content padding>
-
-  <ion-item>
-    <ion-label floating>Email Address</ion-label>
-    <ion-input type="email" [(ngModel)]="user.email"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="user.password"></ion-input>
-  </ion-item>
-
-
-  <button ion-button (click)="login(user)">Login</button>
-  <button ion-button color="light" (click)="register()">Register</button>
-  <button ion-button color="dark" (click)="fb_login()">FB login 2</button>
+  </fieldset>
 
 </ion-content>

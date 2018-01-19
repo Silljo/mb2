@@ -92,7 +92,37 @@
 
   <ion-card>
     <ion-card-header><ion-icon class="info_icon" name="ios-information-circle"></ion-icon> Osnovne informacije </ion-card-header>
-    <ion-card-content>{{opis}}</ion-card-content>
+    <ion-card-content>{{opis}}<br><br></ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header class="card_recenzija"><ion-icon class="info_icon" name="ios-bookmarks"></ion-icon> Recenzije korisnika </ion-card-header>
+
+    <ion-list *ngIf="recenzije_db">
+      <ion-item text-wrap *ngFor="let key of keys">
+        <ion-avatar item-start>
+        <img src="{{galerija_img}}">
+        </ion-avatar>
+        <h2>{{recenzije_db[key].korisnik_ime_prezime}}</h2>
+        <p>{{recenzije_db[key].recenzija}}</p>
+      </ion-item>
+    </ion-list>
+    <br>
+    <form (ngSubmit)="recenzija_save()">
+    <ion-item class="item_recenzija" no-lines>
+      <ion-label>Napiši recenziju: </ion-label>
+      <ion-textarea [(ngModel)]="recenzija" [ngModelOptions]="{standalone: true}"></ion-textarea>
+
+      <button ion-button icon-only item-right color="narandjasta" type="submit">
+        <ion-icon name="md-send" color="bijela" style="padding: 1rem;"></ion-icon>
+      </button>
+    </ion-item>
+  </form>
+
+
+
+
+    <ion-card-content></ion-card-content>
   </ion-card>
 
 </ion-content>

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { User } from "../../models/user";
-import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../../pages/home/home';
 import firebase from 'firebase';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { Facebook } from '@ionic-native/facebook';
 
 
 
@@ -18,8 +17,7 @@ export class LoginPage {
   user = {} as User;
 
 
-  constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public facebook: Facebook, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public facebook: Facebook, public events: Events) {
 
   }
 
@@ -61,9 +59,15 @@ export class LoginPage {
            firebase.auth().signInWithCredential(facebookCredential)
             .then((success) => {
               this.auth.obrada_uspjesnog_logina(success.uid, success.email, success.photoURL, success.displayName).then(
-                (finish) => this.navCtrl.setRoot(HomePage),
+                (finish =>
+                  {
+                    this.navCtrl.setRoot(HomePage);
+                    //Subscribamo ili ne ?
+                    this.auth.subscribe_topics();
+                  }),
                 (error) => alert("Greška")
               );
+
           })
           .catch((error) => {
               alert("Firebase failure: " + JSON.stringify(error));

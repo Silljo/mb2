@@ -5,7 +5,6 @@
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
 
-
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
@@ -46,10 +45,13 @@ $colors: (
   roza: #F05C6A,
   bijela: #FFF,
   plava: #0288D1,
-  siva: #AAA
+  siva: #AAA,
+  facebook_plava: #3B5998,
+  smedja: #A26B34
 
 );
 
+$roza_boja: #F05C6A;
 $zelena_boja: #27793D;
 $narandjasta_boja: #F7A54B;
 $siva_boja: #AAA;
@@ -70,6 +72,10 @@ $plava_boja: #0288D1;
 $segment-button-md-line-height: 3rem;
 $segment-button-md-border-bottom-color: rgba(240, 92, 106, 0.2) !important;
 $segment-button-md-border-color-activated: rgba(240, 92, 106, 1) !important;
+
+$text-input-placeholder-color: #ccc;
+
+$spinner-md-crescent-color: $plava_boja;
 
 // App Windows Variables
 // --------------------------------------------------

@@ -15,48 +15,97 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-.user_photo_izbornik
+$zelena_boja: #27793D;
+$plava_kompl: #225764;
+$maslinasta_komp: #6D9530;
+
+.menu_postavke
 {
-  border-radius: 50%;
-  background-color: red;
+  float: right;
+  background-color: transparent;
+  margin-top: 2rem;
+  margin-right: 2rem;
+  position: absolute;
+  right: 0;
+}
+
+.profile_picture
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 20rem;
+  height: 19rem;
+
+  border-radius: 50rem;
+
+  border-right: 5px;
+  border-right-style: groove;
+  border-right-color: $maslinasta_komp;
+
+  border-left: 5px;
+  border-left-style: groove;
+  border-left-color: $maslinasta_komp;
+
+  background-size: cover;
+  background-position: center left;
+  background-repeat: no-repeat;
+}
+
+.md .menu-inner {
+    background: transparent;
+
+    background-color: rgba(34,87,100, 0.8);
+    //background-color: $zelena_boja;
 }
 
 .div_user_photo_izbornik
 {
-  margin-top: 15%;
+  margin-top: 5%;
   text-align: center;
 }
 
 .username_icon
 {
-  padding-top: 20px;
-  font-size: 20px;
+  font-size: 2.5rem;
+  color: #BBB;
+  font-weight: 300;
+}
+
+.email_icon
+{
+  font-size: 1rem;
+  color: #BBB;
+  font-weight: 300;
 }
 
 ion-menu{
  ion-content{
-  background-color:lightblue !important;
+  background-color:transparent !important;
  }
 }
 
 .menu_list
 {
-  margin-top: 15%;
+  margin-top: 4rem;
 
   .item{
-    background-color: transparent;
-    border-color: pink;
+
+    background-color: rgba(34,87,100, 1);
 
     .item-inner {
-      border-bottom: 0px solid #ccc;
-      border-bottom-left-radius: 50px;
     }
   }
 }
 
 .menu_button
 {
-  margin-top: -15px;
+  margin-top: -5px;
+}
+
+.menu_button_nav
+{
+  margin-top: -17px;
+  color: #BBB !important;
 }
 
 .menu_icon_div
@@ -73,9 +122,9 @@ ion-menu{
   margin-left: 50px;
   position: absolute;
   zoom: 40%;
-  text-transform: uppercase;
-  border-bottom: 1px solid #ccc;
   width: 100%;
+  color: #BBB;
+
 }
 
 .no_padding
@@ -91,10 +140,21 @@ ion-menu{
 
 .navbar_small_subtitle
 {
-  padding: 0 12px;
+  padding-top: 3px;
+  display: block;
   font-size: 1rem;
   font-weight: 300;
   color: #FFF;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  width: 100%;
+}
+
+.ikona_custom_menu
+{
+  height: 3rem;
+  width: 3rem;
+}
+
+.icon_back
+{
+  color: rgba(254,254,254, 0.8) !important;
 }

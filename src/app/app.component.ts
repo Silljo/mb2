@@ -5,23 +5,23 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { SmjestajPage } from '../pages/smjestaj/smjestaj';
-import { GastroPage } from '../pages/gastro/gastro';
-import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
-import { InteraktivnaMapaPage } from '../pages/interaktivna-mapa/interaktivna-mapa';
-import { AtrakcijePage } from '../pages/atrakcije/atrakcije';
 import { DuhovniKutakPage } from '../pages/duhovni-kutak/duhovni-kutak';
-import { KomunalnoPage } from '../pages/komunalno/komunalno';
+import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
+
 
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
-import { Storage } from '@ionic/storage';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 import { Firebase } from '@ionic-native/firebase';
 
 import * as firebase from 'firebase';
 
+export class NotificationModel {
+    public body: string;
+    public title: string;
+    public tap: boolean
+}
 
 @Component({
   templateUrl: 'app.html'
@@ -30,29 +30,68 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-  pages: Array<{title: string, component: any, icon: string}>;
+  pages: Array<{title: string, component: any, icon: string, icon_color: string}>;
   user_img: string;
   username: string;
+  email: string;
   data_user = <any>{};
+  redirekcija: boolean;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private streamingMedia: StreamingMedia,
-              private afAuth: AngularFireAuth, private toast: ToastController, private storage: Storage, public events: Events,
+              private afAuth: AngularFireAuth, private toast: ToastController, public events: Events,
               public conn: ConnectivityServiceProvider, private db: AngularFireDatabase, public firebase_plugin: Firebase) {
 
     this.initializeApp();
 
     this.pages = [
-      { title: 'Početna', component: HomePage, icon: 'md-home'},
-      { title: 'Smještaj', component: SmjestajPage, icon: 'md-home'},
-      { title: 'Gastro', component: GastroPage, icon: 'md-home'},
-      { title: 'Događanja', component: DogadjanjaPage, icon: 'md-home'},
-      { title: 'Interaktivna mapa', component: InteraktivnaMapaPage, icon: 'md-home'},
-      { title: 'Atrakcije', component: AtrakcijePage, icon: 'md-home'},
-      { title: 'Duhovni kutak', component: DuhovniKutakPage, icon: 'md-home'},
-      { title: 'Komunalno', component: KomunalnoPage, icon: 'md-home'}
+      { title: 'Početna', component: HomePage, icon: 'md-home', icon_color: ''},
+      { title: 'Smještaj', component: 'SmjestajPage', icon: 'md-briefcase', icon_color: 'narandjasta'},
+      { title: 'Gastro', component: 'GastroPage', icon: 'md-restaurant', icon_color: 'roza'},
+      { title: 'Događanja', component: DogadjanjaPage, icon: 'md-list-box', icon_color: 'zelena'},
+      { title: 'Interaktivna mapa', component: 'InteraktivnaMapaPage', icon: 'ios-map', icon_color: 'bijela'},
+      { title: 'Atrakcije', component: 'AtrakcijePage', icon: 'ios-camera', icon_color: 'siva'},
+      { title: 'Duhovni kutak', component: DuhovniKutakPage, icon: 'md-body', icon_color: 'crna'},
+      { title: 'Komunalno', component: 'KomunalnoPage', icon: 'md-warning', icon_color: 'plava'}
     ];
 
   }
+
+  private subscribeToPushNotificationEvents(): void {
+
+        // Handle token refresh
+        this.firebase_plugin.onTokenRefresh().subscribe(
+            token => {
+                console.log(`The new token is ${token}`);
+                //this.saveToken(token);
+            },
+            error => {
+                console.error('Error refreshing token', error);
+            });
+
+        // Handle incoming notifications
+        this.firebase_plugin.onNotificationOpen().subscribe(
+            (notification: NotificationModel) => {
+
+                !notification.tap
+                    ? alert('The user was using the app when the notification arrived...')
+                    : alert('The app was closed when the notification arrived...');
+
+                    alert(notification.title);
+                    alert(notification.body);
+
+                    /*
+                let notificationAlert = this.alertCtrl.create({
+                    title: notification.title,
+                    message: notification.body,
+                    buttons: ['Ok']
+                });
+                notificationAlert.present();*/
+            },
+            error => {
+                console.error('Error getting the notification', error);
+            });
+    }
+
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -61,6 +100,30 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
+      this.platform.registerBackButtonAction(() => {
+            if(this.nav.canGoBack()){
+              this.nav.pop();
+            }else{
+              //don't do anything
+            }
+          });
+
+      /*
+      this.firebase_plugin.onNotificationOpen().subscribe(notification => {
+
+        if(notification.modul)
+        {
+          if(notification.modul == 'komunalno')
+          {
+            this.rootPage = KomunalnoPage;
+          }
+            this.redirekcija = true;
+        }
+
+        //alert(JSON.stringify(notification.modul));
+
+      });
+      */
     });
 
     //Ajmo pohraniti sve vezano za korisnika sta bi nam trebalo u nekom trenutku
@@ -75,7 +138,7 @@ export class MyApp {
           {
             this.username = data_user['display_name'];
             this.user_img = data_user['slika'];
-
+            this.email = data_user['email'];
 
             //Kad smo sigurni da je sve u bazi onda i updejtamo token men
             this.firebase_plugin.getToken().then(token_firebase => {
@@ -91,7 +154,12 @@ export class MyApp {
 
         });
 
-        this.rootPage = HomePage;
+        if(!this.redirekcija)
+        {
+            this.rootPage = HomePage;
+        }
+
+
 
         /*
         firebase.database().ref('/user_profiles/' + data.uid).update({
@@ -129,10 +197,10 @@ export class MyApp {
 
     // Play an audio file with options (all options optional)
     var options = {
-      bgColor: "#E1E1E1",
-      bgImage: "http://www.rmb.hr/wp-content/uploads/2015/06/RMB1.png",
+      bgColor: "#FFFFFF",
+      bgImage: "https://firebasestorage.googleapis.com/v0/b/mbistrica-c5bd3.appspot.com/o/rmb_logo.png?alt=media&token=7854878d-55b2-4856-b790-748ab7484513",
       bgImageScale: "fit", // other valid values: "stretch"
-      initFullscreen: false, // true(default)/false iOS only
+      initFullscreen: true, // true(default)/false iOS only
       successCallback: function() {
 
       },

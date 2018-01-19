@@ -22,8 +22,9 @@ export class GalerijaPage {
     this.id = navParams.get('id');
     this.tip = navParams.get('tip');
 
+    /*
     this.id = 1;
-    this.tip = 'smjestaj_detalji';
+    this.tip = 'smjestaj_detalji';*/
 
     //Ajmo po slike
     db.object("/" + this.tip + "/" + this.id + "/galerija_slike").valueChanges().subscribe((data_slike) => {

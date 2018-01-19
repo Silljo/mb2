@@ -6,6 +6,7 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 @Component({
   selector: 'page-atrakcije-detalji',
   templateUrl: 'atrakcije-detalji.html',
+  styleUrls: ['assets/css/detalji.scss']
 })
 export class AtrakcijeDetaljiPage {
 
@@ -24,7 +25,7 @@ export class AtrakcijeDetaljiPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
 
     this.id = navParams.get('id');
-    this.id = 1
+
     this.atrakcije_detalji = db.object('/atrakcije/'+ this.id).valueChanges().subscribe((data) => {
       this.atrakcija_naziv = data['naziv'];
       this.atrakcija_opis = data['opis_long'];
@@ -44,6 +45,11 @@ export class AtrakcijeDetaljiPage {
   close_pop()
   {
     this.navCtrl.pop();
+  }
+
+  open_galerija(id, child_node_baza)
+  {
+    this.navCtrl.push('GalerijaPage', {id: id, tip: child_node_baza});
   }
 
 }

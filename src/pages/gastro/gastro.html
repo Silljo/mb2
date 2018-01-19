@@ -3,13 +3,15 @@
     <button ion-button menuToggle >
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Gastro</ion-title>
-    <span class="navbar_small_subtitle">PONUDA HRANE, JELA I PIĆA</span>
+    <ion-title>Gastro
+      <span class="navbar_small_subtitle">PONUDA HRANE, JELA I PIĆA</span>
+    </ion-title>
+
 
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="gastro_content">
 
   <ion-segment class="segment_class" [(ngModel)]="gastro" color="secondary">
     <ion-segment-button value="hrana">

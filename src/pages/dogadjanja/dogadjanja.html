@@ -4,8 +4,10 @@
     <button ion-button menuToggle >
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Događanja</ion-title>
-    <span class="navbar_small_subtitle">KULTURNA, SPORTSKA, ZABAVNA</span>
+    <ion-title>Događanja
+      <span class="navbar_small_subtitle">KULTURNA, SPORTSKA, ZABAVNA</span>
+    </ion-title>
+
   </ion-navbar>
 
 </ion-header>
@@ -28,13 +30,14 @@
     </ion-segment-button>
   </ion-segment>
 
+
   <div [ngSwitch]="dogadjanja" class="segmet_div">
 
     <div *ngSwitchCase="'kultura'" class="padding_custom">
       <timeline endIcon="">
         <timeline-item *ngFor="let kultura of dogadjanja_kultura | async">
           <timeline-time [title]="[kultura.datum, kultura.vrijeme]"></timeline-time>
-          <ion-icon [name]="'calendar'"></ion-icon>
+          <ion-icon class="ion-icon_class" [name]="'calendar'"></ion-icon>
 
           <ion-card>
 
@@ -44,13 +47,15 @@
               </ion-avatar>
               <h2>{{kultura.naziv}}</h2>
               <p>{{kultura.lokacija}}</p>
+              <ion-icon name="notifications" color="zelena" item-right (click)="add_notification_reminder(kultura.datum, kultura.vrijeme, kultura.naziv, kultura.lokacija, kultura.slika_avatar)"></ion-icon>
             </ion-item>
 
-            <div *ngIf="kultura.slika"><img src="{{kultura.slika}}"></div>
+            <div *ngIf="kultura.slika"><img *ngIf="kultura.slika != ''" src="{{kultura.slika}}"></div>
 
             <ion-card-content>
               {{kultura.opis}}
             </ion-card-content>
+
           </ion-card>
         </timeline-item>
       </timeline>
@@ -60,7 +65,7 @@
       <timeline endIcon="">
         <timeline-item *ngFor="let sport of dogadjanja_sport | async">
           <timeline-time [title]="[sport.datum, sport.vrijeme]"></timeline-time>
-          <ion-icon [name]="'calendar'"></ion-icon>
+          <ion-icon class="ion-icon_class" [name]="'calendar'"></ion-icon>
 
           <ion-card>
 
@@ -70,6 +75,7 @@
               </ion-avatar>
               <h2>{{sport.naziv}}</h2>
               <p>{{sport.lokacija}}</p>
+              <ion-icon name="notifications" color="zelena" item-right (click)="add_notification_reminder(sport.datum, sport.vrijeme, sport.naziv, sport.lokacija, sport.slika_avatar)"></ion-icon>
             </ion-item>
 
             <div *ngIf="sport.slika"><img src="{{sport.slika}}"></div>
@@ -86,7 +92,7 @@
       <timeline endIcon="">
         <timeline-item *ngFor="let zabava of dogadjanja_zabava | async">
           <timeline-time [title]="[zabava.datum, zabava.vrijeme]"></timeline-time>
-          <ion-icon [name]="'calendar'"></ion-icon>
+          <ion-icon class="ion-icon_class" [name]="'calendar'"></ion-icon>
 
           <ion-card>
 
@@ -96,6 +102,7 @@
               </ion-avatar>
               <h2>{{zabava.naziv}}</h2>
               <p>{{zabava.lokacija}}</p>
+              <ion-icon name="notifications" color="zelena" item-right (click)="add_notification_reminder(zabava.datum, zabava.vrijeme, zabava.naziv, zabava.lokacija, zabava.slika_avatar)"></ion-icon>
             </ion-item>
 
             <div *ngIf="zabava.slika"><img src="{{zabava.slika}}"></div>

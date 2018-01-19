@@ -1,37 +1,39 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" bar-clear>
   <ion-header>
   </ion-header>
 
   <ion-content>
 
-      <div class="div_user_photo_izbornik">
-        <img class="user_photo_izbornik"  src="{{user_img}}"><br><br>
-        <span class="username_icon">{{username}}</span>
+      <div class="div_user_photo_izbornik" (click)="user_postavke()" menuClose>
+        <div class="profile_picture" [style.background-image]="'url(' + user_img + ')'"></div>
+        <br><br>
+        <span class="username_icon">{{username}}</span><br>
+        <span class="email_icon"><i>{{email}}</i></span>
       </div>
 
-      <ion-list class="menu_list">
+      <ion-list class="menu_list item-borderless" no-lines>
 
-        <button class="menu_button" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <button class="menu_button_nav" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
           <div class="main_wraper_div_menu">
-              <ion-icon class="menu_icon_div" name="{{p.icon}}"><span class="menu_tekst">{{p.title}}</span></ion-icon>
+              <ion-icon class="menu_icon_div" color="{{p.icon_color}}" name="{{p.icon}}"><span class="menu_tekst">{{p.title}}</span></ion-icon>
           </div>
         </button>
 
-        <button class="menu_button" menuClose ion-item (click)="openRadio()">
+        <button class="menu_button_nav" menuClose ion-item (click)="openRadio()">
           <div class="main_wraper_div_menu">
               <ion-icon class="menu_icon_div" name="md-radio"><span class="menu_tekst">Radio</span></ion-icon>
           </div>
         </button>
 
-        <button class="menu_button" menuClose ion-item (click)="login()">
+        <button class="menu_button_nav" menuClose ion-item (click)="login()">
           <div class="main_wraper_div_menu">
               <ion-icon class="menu_icon_div" name="md-radio"><span class="menu_tekst">Login</span></ion-icon>
           </div>
         </button>
 
-        <button class="menu_button" menuClose ion-item (click)="user_postavke()">
+        <button class="menu_button_nav" menuClose ion-item (click)="user_postavke()">
           <div class="main_wraper_div_menu">
-              <ion-icon class="menu_icon_div" name="md-radio"><span class="menu_tekst">Postavke</span></ion-icon>
+              <ion-icon class="menu_icon_div" color="smedja" name="md-settings"><span class="menu_tekst">Postavke</span></ion-icon>
           </div>
         </button>
 

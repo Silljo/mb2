@@ -1,30 +1,33 @@
 page-gastro-detalji {
 
-  $theme_color: #F05C6A;
-
   .info_icon
   {
-    color: $theme_color !important;
+    color: $roza_boja !important;
   }
 
   .pull
   {
-    color: $theme_color !important;
+    color: $roza_boja !important;
   }
 
   .smjestaj_naziv
   {
-    color: $theme_color !important;
+    color: $roza_boja !important;
   }
 
   .adresa
   {
-    color: $theme_color !important;
+    color: $roza_boja !important;
   }
 
   .icon_list
   {
-    color: $theme_color !important;
+    color: $roza_boja !important;
+  }
+
+  .galerija_icon
+  {
+    color: $roza_boja !important;
   }
 
 }

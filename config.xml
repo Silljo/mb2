@@ -3,7 +3,7 @@
     <name>mBistrica.</name>
     <description>mBistrica - Mobilna aplikacija</description>
     <author email="luka.siltic@gmail.com" href="http://ionicframework.com/">Luka Šiltić</author>
-    <content original-src="index.html" src="http://192.168.1.103:8100" />
+    <content original-src="index.html" src="http://192.168.1.102:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
@@ -85,6 +85,8 @@
     <allow-navigation href="http://192.168.1.5:8100" />
     <allow-navigation href="http://192.168.1.6:8100" />
     <allow-navigation href="http://192.168.1.103:8100" />
+    <allow-navigation href="http://192.168.1.102:8100" />
+    <allow-navigation href="http://192.168.1.100:8100" />
     <engine name="android" spec="6.3.0" />
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
         <variable name="APP_ID" value="508576922808083" />
@@ -105,4 +107,5 @@
         <variable name="API_KEY_FOR_IOS" value="AIzaSyA94aPEJXN0iof_xYzqPlMbewvsEbZNdxw" />
     </plugin>
     <plugin name="cordova-plugin-firebase" spec="^0.1.24" />
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.1" />
 </widget>

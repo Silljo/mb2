@@ -4,7 +4,7 @@ page-duhovni-kutak {
     color: $crna_boja;
   }
 
-  .timeline timeline-item ion-icon {
+  .timeline timeline-item .ion-icon_class {
     background: $crna_boja;
   }
 
@@ -12,7 +12,7 @@ page-duhovni-kutak {
     background: $siva_boja;
   }
 
-  .timeline timeline-item ion-icon{
+  .timeline timeline-item .ion-icon_class{
     box-shadow: 0 0 0 8px $siva_boja;
 
     &:after {

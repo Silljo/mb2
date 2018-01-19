@@ -39,8 +39,9 @@ export class GastroDetaljiPage {
     this.id = navParams.get('id');
     this.tip = navParams.get('tip');
 
+    /*
     this.tip = 'pice';
-    this.id = 1;
+    this.id = 1;*/
 
     if(this.tip == 'hrana')
     {
@@ -111,7 +112,7 @@ export class GastroDetaljiPage {
          start: resp.coords.latitude + ", " + resp.coords.longitude
        };
 
-       this.launchNavigator.navigate([this.location_lon, this.location_lat], options)
+       this.launchNavigator.navigate([this.location_lat, this.location_lon], options)
        .then(
          success => console.log('Launched navigator'),
          error => console.log('Error launching navigator', error)
@@ -121,11 +122,21 @@ export class GastroDetaljiPage {
       alert('Greška: ' + error);
     });
 
+  }
 
+  open_galerija(id, tip)
+  {
 
+    if(tip == 'hrana')
+    {
+      var child_node_baza = 'gastro_detalji_hrana';
+    }
+    else
+    {
+      var child_node_baza = 'gastro_detalji_pice';
+    }
 
-
-
+    this.navCtrl.push('GalerijaPage', {id: id, tip: child_node_baza});
   }
 
 }

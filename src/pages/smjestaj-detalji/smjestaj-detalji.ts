@@ -4,6 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import firebase from 'firebase';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
@@ -12,7 +13,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 })
 export class SmjestajDetaljiPage {
 
-
+  recenzija: any = '';
   id: any;
   smjestaj: any = {};
   adresa: string;
@@ -30,9 +31,11 @@ export class SmjestajDetaljiPage {
   radno_vrijeme_sati: string;
   location_lat: number;
   location_lon: number;
+  recenzije_db: String[];
+  keys: String[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase, public viewCtrl: ViewController,
-              private launchNavigator: LaunchNavigator, private geolocation: Geolocation) {
+              private launchNavigator: LaunchNavigator, private geolocation: Geolocation, public auth: AngularFireAuth) {
 
     this.id = navParams.get('id');
 
@@ -52,6 +55,12 @@ export class SmjestajDetaljiPage {
         this.radno_vrijeme_sati = data['radno_vrijeme_sati'];
         this.location_lat = data['location_lat'];
         this.location_lon = data['location_lon'];
+
+        if(data['recenzije'])
+        {
+            this.recenzije_db = data['recenzije'];
+            this.keys = Object.keys(this.recenzije_db);
+        }
 
     });
 
@@ -82,14 +91,14 @@ export class SmjestajDetaljiPage {
          start: resp.coords.latitude + ", " + resp.coords.longitude
        };
 
-       this.launchNavigator.navigate([this.location_lon, this.location_lat], options)
+       this.launchNavigator.navigate([this.location_lat, this.location_lon], options)
        .then(
          success => console.log('Launched navigator'),
          error => console.log('Error launching navigator', error)
        );
 
     }).catch((error) => {
-      alert('Greška: ' + error);
+      alert('Greška: ' + JSON.stringify(error));
     });
 
   }
@@ -97,6 +106,28 @@ export class SmjestajDetaljiPage {
   open_galerija(id, child_node_baza)
   {
     this.navCtrl.push('GalerijaPage', {id: id, tip: child_node_baza});
+  }
+
+  recenzija_save()
+  {
+
+    var recenzija_baza = this.recenzija;
+    this.recenzija = '';
+
+    if(recenzija_baza.length > 5)
+    {
+      this.auth.authState.subscribe(data => {
+        if (data && data.uid) {
+          firebase.database().ref('/smjestaj_detalji/' + this.id + '/recenzije/' + data.uid).set({
+              korisnik_ime_prezime: data.displayName,
+              recenzija: recenzija_baza
+            });
+          }
+        });
+    }
+
+
+
   }
 
 
