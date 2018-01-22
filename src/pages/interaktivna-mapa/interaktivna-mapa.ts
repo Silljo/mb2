@@ -38,8 +38,6 @@ export class InteraktivnaMapaPage {
   markers_atrakcije = [];
   markers_atrakcije_checkbox: boolean = true;
 
-  stop = false;
-
   constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public db: AngularFireDatabase, public loadingCtrl: LoadingController,public events: Events) {
 
     db.object("/interaktivna_mapa/").valueChanges().subscribe((data_opcenito) => {
@@ -80,12 +78,6 @@ export class InteraktivnaMapaPage {
    this.loadMap();
   }
 
-  ionViewDidLeave()
-  {
-
-
-  }
-
  loadMap() {
     this.mapElement = document.getElementById('map');
     this.map = this.googleMaps.create(this.mapElement);
@@ -97,6 +89,11 @@ export class InteraktivnaMapaPage {
     });
 
     loading.present();
+
+    //Ako ga ne makne zadnja funkcija onda ga makivamo ovdje
+    setTimeout(function(){
+      if(this.loading){ this.loading.dismiss(); this.loading = null; }
+    }, 25000);
 
     this.events.subscribe('test', () => {
       loading.dismiss();
@@ -208,11 +205,6 @@ export class InteraktivnaMapaPage {
 
                   icon: {url: item_pice.interaktivna_mapa_slika, size: {width: 24, height: 24}}, animation: 'BOUNCE', zIndex: 0,
                   position: { lat: item_pice.location_lat, lng: item_pice.location_lon } }).then(marker => {
-
-                    if(this.stop == true)
-                    {
-                      return;
-                    }
 
                   this.markers_gastro = this.markers_gastro.concat(marker);
 

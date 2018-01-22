@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Rx';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -11,13 +11,22 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 export class DuhovniKutakPage {
 
   duhovni_kutak_data: Observable<any[]>;
+  toast_msg: any;
 
-  constructor(public navCtrl: NavController, db: AngularFireDatabase, private local_notifications: LocalNotifications) {
+  constructor(public navCtrl: NavController, db: AngularFireDatabase, private local_notifications: LocalNotifications, private toast: ToastController) {
     this.duhovni_kutak_data = db.list("/duhovni_kutak/", ref => ref.orderByChild('order_date')).valueChanges();
   }
 
   add_notification_reminder(datum, vrijeme, naziv, lokacija, icon)
   {
+
+    this.toast_msg = this.toast.create({
+      message: 'Dodali ste podsjetnik',
+      position: 'bottom',
+      duration: 2000,
+    });
+
+    this.toast_msg.present();
     //new Date(2017, 10, 27, 15)
     //alert(datum);
 

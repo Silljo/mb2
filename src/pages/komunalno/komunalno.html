@@ -86,7 +86,7 @@
   </div>
 
     <div *ngSwitchCase="'arhiva'">
-      <ion-card *ngFor="let prijave of prijave_komunalno_data | async | reverse" class="no_padding">
+      <ion-card *ngFor="let prijave of prijave_komunalno_data | async" class="no_padding">
 
         <ion-item>
           <ion-icon item-right *ngIf="prijave.status == 2" name="md-eye-off"></ion-icon>
