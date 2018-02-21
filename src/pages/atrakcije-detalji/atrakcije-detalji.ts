@@ -1,16 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
   selector: 'page-atrakcije-detalji',
-  templateUrl: 'atrakcije-detalji.html',
-  styleUrls: ['assets/css/detalji.scss']
+  templateUrl: 'atrakcije-detalji.html'
 })
 export class AtrakcijeDetaljiPage {
-
-  @ViewChild(Slides) slides: Slides;
 
   id: any;
   atrakcije_detalji: any = {};
@@ -20,7 +17,6 @@ export class AtrakcijeDetaljiPage {
   atrakcija_slike_galerija: Array<any>;
   atrakcija_slika_main: string;
   atrakcija_slika_galerija: string;
-
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
 
@@ -36,10 +32,6 @@ export class AtrakcijeDetaljiPage {
     });
 
 
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AtrakcijeDetaljiPage');
   }
 
   close_pop()

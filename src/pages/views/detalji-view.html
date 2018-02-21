@@ -28,6 +28,18 @@
    </ion-row>
   </ion-grid>
 
+  <!-- Ako nema zvjezdica ne prikazujemo -->
+  <ion-grid *ngIf="zvjezdica" class="grid_ponuda zvijezdice">
+    <ion-row >
+      <ion-col col-12 class="zvijezdice">
+        <span *ngIf="zvjezdica == 1"><ion-icon name="star"></ion-icon></span>
+        <span *ngIf="zvjezdica == 2"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+        <span *ngIf="zvjezdica == 3"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+        <span *ngIf="zvjezdica == 4"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+        <span *ngIf="zvjezdica == 5"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <br>
   <ion-list>
     <ion-item-sliding>
@@ -81,7 +93,35 @@
 
   <ion-card>
     <ion-card-header><ion-icon class="info_icon" name="ios-information-circle"></ion-icon> Osnovne informacije </ion-card-header>
-    <ion-card-content>{{opis}}</ion-card-content>
+    <ion-card-content>{{opis}}<br><br></ion-card-content>
+  </ion-card>
+
+  <!-- Ako imamo flag recenzije_show TRUE onda se prikazuju recenzije -->
+  <ion-card *ngIf="recenzije_show">
+    <ion-card-header class="card_recenzija"><ion-icon class="info_icon" name="ios-bookmarks"></ion-icon> Recenzije korisnika </ion-card-header>
+
+    <ion-list *ngIf="recenzije_db">
+      <ion-item text-wrap *ngFor="let key of keys">
+        <ion-avatar item-start>
+        <img src="{{galerija_img}}">
+        </ion-avatar>
+        <h2>{{recenzije_db[key].korisnik_ime_prezime}}</h2>
+        <p>{{recenzije_db[key].recenzija}}</p>
+      </ion-item>
+    </ion-list>
+    <br>
+    <form (ngSubmit)="recenzija_save()">
+    <ion-item class="item_recenzija" no-lines>
+      <ion-label>Napiši recenziju: </ion-label>
+      <ion-textarea [(ngModel)]="recenzija" [ngModelOptions]="{standalone: true}"></ion-textarea>
+
+      <button ion-button icon-only item-right color="narandjasta" type="submit">
+        <ion-icon name="md-send" color="bijela" style="padding: 1rem;"></ion-icon>
+      </button>
+    </ion-item>
+  </form>
+
+    <ion-card-content></ion-card-content>
   </ion-card>
 
 </ion-content>

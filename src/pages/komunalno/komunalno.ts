@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, IonicPage, ToastController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { DatePipe } from '@angular/common';
 
 
@@ -27,7 +27,8 @@ export class KomunalnoPage {
   komunalni_redar = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private camera: Camera,
-              public db: AngularFireDatabase, public auth: AngularFireAuth, private datePipe: DatePipe, public loadingCtrl: LoadingController) {
+              public db: AngularFireDatabase, public auth: AngularFireAuth, private datePipe: DatePipe, public loadingCtrl: LoadingController,
+              private toast: ToastController) {
 
     /*
     STATUSI:
@@ -57,12 +58,12 @@ export class KomunalnoPage {
           {
             this.komunalno_segment = 'arhiva';
             this.komunalni_redar = data_user['komunalno'];
-            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.limitToLast(20).orderByChild('datum_order')).valueChanges();
-            
+            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.limitToLast(20).orderByChild('status')).valueChanges();
+
           }
           else
           {
-            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.limitToLast(20).orderByChild('datum_order')).valueChanges();
+            this.prijave_komunalno_data = db.list('/komunalno', ref => ref.limitToLast(20).orderByChild('status')).valueChanges();
 
           }
           console.log(this.prijave_komunalno_data);
@@ -85,6 +86,12 @@ export class KomunalnoPage {
 
     let loading = this.loadingCtrl.create({
       content: 'Slanje prijave, molim pričekajte...'
+    });
+
+    let toast = this.toast.create({
+      message: 'Vaša prijava poslana je komunalnom redaru. Nakon obrade prijave primiti ćete obavijest.',
+      duration: 5000,
+      position: 'bottom'
     });
 
     loading.present();
@@ -123,6 +130,7 @@ export class KomunalnoPage {
             });
 
             loading.dismiss();
+            toast.present();
 
         });
       }

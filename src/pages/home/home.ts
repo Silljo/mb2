@@ -23,7 +23,6 @@ export class HomePage {
   constructor(public db: AngularFireDatabase) {
 
     this.podaci = this.db.object("/pocetna/").valueChanges().subscribe((data) => {
-      this.vrijeme_slike = data['slike_trenutno_vrijeme'];
       this.slika_pozadina = data['slika_pozadina'];
     });
 
@@ -38,6 +37,8 @@ export class HomePage {
       this.vrijeme_temp_min = this.podaci_vrijeme_data.main.temp_min;
 
       this.podaci_vrijeme_prognoza = JSON.parse(data_vrijeme['forecast'].data).list;
+
+      this.format_datuma();
 
       this.prognoza = [{
         0: this.podaci_vrijeme_prognoza[0],
@@ -80,4 +81,46 @@ export class HomePage {
     });
 
   }
+
+
+  format_datuma()
+  {
+    for (let key in this.podaci_vrijeme_prognoza) {
+
+      var datum_timestamp = new Date(this.podaci_vrijeme_prognoza[key].dt * 1000);
+      var dan = datum_timestamp.getDay();
+
+      if(dan == 0)
+      {
+        this.podaci_vrijeme_prognoza[key].dan_txt = 'Ned';
+      }
+      if(dan == 1)
+      {
+        this.podaci_vrijeme_prognoza[key].dan_txt = 'Pon';
+      }
+      if(dan == 2)
+      {
+        this.podaci_vrijeme_prognoza[key].dan_txt = 'Uto';
+      }
+      if(dan == 3)
+      {
+        this.podaci_vrijeme_prognoza[key].dan_txt = 'Sri';
+      }
+      if(dan == 4)
+      {
+        this.podaci_vrijeme_prognoza[key].dan_txt = 'Čet';
+      }
+      if(dan == 5)
+      {
+        this.podaci_vrijeme_prognoza[key].dan_txt = 'Pet';
+      }
+      if(dan == 6)
+      {
+        this.podaci_vrijeme_prognoza[key].dan_txt = 'Sub';
+      }
+
+    }
+
+  }
+
 }

@@ -34,8 +34,9 @@
 
       <ion-list radio-group formControlName="hitnost" no-lines>
         <ion-list-header class="radio_header">
-          Hitnost
+          Hitnost:
         </ion-list-header>
+
           <ion-item class="margine_prevelike">
             <ion-label>Visoka</ion-label>
             <ion-radio value="visoka" color="plava"></ion-radio>
@@ -72,12 +73,11 @@
       </ion-item>
       <ion-input type="hidden" formControlName="slika" value="{{this.slika_validation}}"></ion-input>
 
-      <br>
-
       <ion-grid>
         <ion-row>
-          <ion-col offset-4 col-4>
+          <ion-col offset-3 col-6>
             <button ion-button round full type="submit" color="plava" [disabled]="!komunalno.valid">Pošalji</button>
+            <div *ngIf="!komunalno.valid" class="kumunalno_polja_obavezna">(prije slanja popunite sva polja)</div>
           </ion-col>
         </ion-row>
       </ion-grid>

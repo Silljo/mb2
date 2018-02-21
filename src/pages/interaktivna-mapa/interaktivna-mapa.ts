@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, Events } from 'ionic-angular';
-import { ConnectivityServiceProvider } from '../../providers/connectivity-service/connectivity-service';
-import { GoogleMaps, GoogleMap, GoogleMapsEvent, CameraPosition } from '@ionic-native/google-maps';
+import { IonicPage, NavController, LoadingController, Events, AlertController } from 'ionic-angular';
+import { GoogleMaps, GoogleMap, GoogleMapsEvent } from '@ionic-native/google-maps';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -38,7 +39,8 @@ export class InteraktivnaMapaPage {
   markers_atrakcije = [];
   markers_atrakcije_checkbox: boolean = true;
 
-  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public db: AngularFireDatabase, public loadingCtrl: LoadingController,public events: Events) {
+  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public db: AngularFireDatabase, public loadingCtrl: LoadingController,public events: Events,
+              private diagnostic: Diagnostic, private alertCtrl: AlertController) {
 
     db.object("/interaktivna_mapa/").valueChanges().subscribe((data_opcenito) => {
       this.interaktivna_mapa_opcenito = data_opcenito;
@@ -75,28 +77,60 @@ export class InteraktivnaMapaPage {
   }
 
   ionViewDidLoad() {
-   this.loadMap();
+
+    let alert = this.alertCtrl.create({
+      title: 'Lokacija',
+      message: 'Odabrani modul koristi lokaciju vašeg mobilnog uređaja. Za nastavak potrebno je dozvoliti pristup Vašoj lokaciji',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.navCtrl.setRoot('InteraktivnaMapaPage');
+          }
+        },
+        {
+          text: 'Odustani',
+          handler: () => {
+            this.navCtrl.setRoot(HomePage);
+          }
+        }
+      ]
+    });
+
+    this.diagnostic.requestLocationAuthorization().then((status) => {
+
+      switch(status){
+       case this.diagnostic.permissionStatus.NOT_REQUESTED:
+            alert.present();
+           break;
+       case this.diagnostic.permissionStatus.DENIED:
+           alert.present();
+           break;
+       case this.diagnostic.permissionStatus.GRANTED:
+            this.loadMap();
+           break;
+       case this.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
+            alert.present();
+           break;
+        }
+
+    }).catch(e => console.log(e));
+
   }
 
  loadMap() {
     this.mapElement = document.getElementById('map');
     this.map = this.googleMaps.create(this.mapElement);
 
-    var obj = this;
-
     let loading = this.loadingCtrl.create({
-      content: 'Dohvaćam sadržaj, molim pričekajte...'
+      content: 'Dohvaćam sadržaj, molim pričekajte (brzina učitavanja sadržaja ovisi o brzini pristupa mreži)...',
+      duration: 50000
     });
 
     loading.present();
 
-    //Ako ga ne makne zadnja funkcija onda ga makivamo ovdje
-    setTimeout(function(){
-      if(this.loading){ this.loading.dismiss(); this.loading = null; }
-    }, 25000);
-
     this.events.subscribe('test', () => {
-      loading.dismiss();
+      if(loading){ loading.dismiss(); loading = null; }
     });
 
     // Wait the MAP_READY before using any methods.
@@ -374,7 +408,7 @@ export class InteraktivnaMapaPage {
 
   }
 
-  show_hide_markers(value)
+  show_hide_markers()
   {
 
     if(!this.markers_opcenito_checkbox)

@@ -62,7 +62,6 @@ export class AuthProvider {
     });
 
 
-
   }
 
   subscribe_topics()
@@ -97,6 +96,7 @@ export class AuthProvider {
     else if(data.code == 'auth/email-already-in-use'){this.greska = 'Unesena e-mail adresa se već koristi.';}
     else if(data.code == 'auth/weak-password'){this.greska = 'Jačina lozinke nije dovoljna. Unesite novu lozinku';}
     else if(data.code == 'auth/operation-not-allowed'){this.greska = 'Odabrana operacija nije dozvoljena';}
+    else if(data.code == 'auth/account-exists-with-different-credential'){this.greska = 'Korisnički račun sa odabranom e-mail adresom već postoji (e-mail/facebook prijava).';}
     else{this.greska = 'Pogrešni korisnički podaci. Pokušajte ponovno.';}
 
     let toast = this.toastCtrl.create({
@@ -105,12 +105,7 @@ export class AuthProvider {
       position: 'bottom'
     });
 
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
     toast.present();
-
 
   }
 

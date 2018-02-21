@@ -1,21 +1,21 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, ToastController, Events } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { DuhovniKutakPage } from '../pages/duhovni-kutak/duhovni-kutak';
 import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
 
 
-import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media';
+import { StreamingMedia } from '@ionic-native/streaming-media';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 import { Firebase } from '@ionic-native/firebase';
 
 import * as firebase from 'firebase';
+
 
 export class NotificationModel {
     public body: string;
@@ -29,7 +29,7 @@ export class NotificationModel {
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = '';
   pages: Array<{title: string, component: any, icon: string, icon_color: string}>;
   user_img: string;
   username: string;
@@ -38,7 +38,7 @@ export class MyApp {
   redirekcija: boolean;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private streamingMedia: StreamingMedia,
-              private afAuth: AngularFireAuth, private toast: ToastController, public events: Events,
+              private afAuth: AngularFireAuth, public events: Events,
               public conn: ConnectivityServiceProvider, private db: AngularFireDatabase, public firebase_plugin: Firebase) {
 
     this.initializeApp();
@@ -49,7 +49,7 @@ export class MyApp {
       { title: 'Gastro', component: 'GastroPage', icon: 'md-restaurant', icon_color: 'roza'},
       { title: 'Događanja', component: DogadjanjaPage, icon: 'md-list-box', icon_color: 'zelena'},
       { title: 'Interaktivna mapa', component: 'InteraktivnaMapaPage', icon: 'ios-map', icon_color: 'bijela'},
-      { title: 'Atrakcije', component: 'AtrakcijePage', icon: 'ios-camera', icon_color: 'siva'},
+      { title: 'Posebnosti', component: 'AtrakcijePage', icon: 'ios-camera', icon_color: 'siva'},
       { title: 'Duhovni kutak', component: DuhovniKutakPage, icon: 'md-body', icon_color: 'crna'},
       { title: 'Komunalno', component: 'KomunalnoPage', icon: 'md-warning', icon_color: 'plava'}
     ];
@@ -62,11 +62,12 @@ export class MyApp {
         this.firebase_plugin.onTokenRefresh().subscribe(
             token => {
                 console.log(`The new token is ${token}`);
+                alert("tu sam");
                 //this.saveToken(token);
             },
-            error => {
-                console.error('Error refreshing token', error);
-            });
+          error => {
+              console.error('Error refreshing token', error);
+          });
 
         // Handle incoming notifications
         this.firebase_plugin.onNotificationOpen().subscribe(
@@ -95,10 +96,10 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
 
       this.platform.registerBackButtonAction(() => {
             if(this.nav.canGoBack()){
@@ -129,11 +130,9 @@ export class MyApp {
     //Ajmo pohraniti sve vezano za korisnika sta bi nam trebalo u nekom trenutku
     this.afAuth.authState.subscribe(data => {
 
-      if (data && data.email && data.uid) {
-
+      if (data && data.uid) {
         //Ajmo po sliku usera i naziv
         this.db.object("/user_profiles/" + data.uid).valueChanges().subscribe((data_user) => {
-
           if(data_user)
           {
             this.username = data_user['display_name'];
@@ -156,23 +155,14 @@ export class MyApp {
 
         if(!this.redirekcija)
         {
+            this.splashScreen.hide();
             this.rootPage = HomePage;
         }
-
-
-
-        /*
-        firebase.database().ref('/user_profiles/' + data.uid).update({
-            user_token: '1111111'
-          });*/
-
-
-
-
 
       }
       else {
         //Nema nikakvih podataka da je korisnik ulogiran...
+        this.splashScreen.hide();
         this.rootPage = LoginPage;
       }
     });
@@ -187,7 +177,6 @@ export class MyApp {
     {
         this.nav.setRoot(page.component);
     }
-
 
   }
 
@@ -205,7 +194,7 @@ export class MyApp {
 
       },
       errorCallback: function(errMsg) {
-
+          this.nav.setRoot(HomePage);
       }
     };
     this.streamingMedia.playAudio(audioUrl, options);
@@ -214,6 +203,16 @@ export class MyApp {
   login()
   {
     this.nav.setRoot(LoginPage);
+  }
+
+  logout()
+  {
+    firebase.auth().signOut().then(function() {
+      //Ako se odlogira moramo maknuti korisnikov token
+
+    }, function(error) {
+      alert(error)
+    });
   }
 
   user_postavke()

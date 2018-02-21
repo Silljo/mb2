@@ -8,8 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 @IonicPage()
 @Component({
   selector: 'page-gastro-detalji',
-  templateUrl: 'gastro-detalji.html',
-  styleUrls: ['assets/css/detalji.scss']
+  templateUrl: '../views/detalji-view.html'
 })
 export class GastroDetaljiPage {
 
@@ -31,11 +30,13 @@ export class GastroDetaljiPage {
   radno_vrijeme_sati: string;
   location_lat: number;
   location_lon: number;
+  recenzije_show : any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase,
               private launchNavigator: LaunchNavigator, private geolocation: Geolocation) {
 
+    this.recenzije_show = 0;
     this.id = navParams.get('id');
     this.tip = navParams.get('tip');
 
@@ -126,14 +127,15 @@ export class GastroDetaljiPage {
 
   open_galerija(id, tip)
   {
+    var child_node_baza;
 
     if(tip == 'hrana')
     {
-      var child_node_baza = 'gastro_detalji_hrana';
+      child_node_baza = 'gastro_detalji_hrana';
     }
     else
     {
-      var child_node_baza = 'gastro_detalji_pice';
+      child_node_baza = 'gastro_detalji_pice';
     }
 
     this.navCtrl.push('GalerijaPage', {id: id, tip: child_node_baza});

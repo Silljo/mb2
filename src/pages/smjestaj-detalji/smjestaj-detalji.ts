@@ -9,7 +9,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 @IonicPage()
 @Component({
   selector: 'page-smjestaj-detalji',
-  templateUrl: 'smjestaj-detalji.html'
+  templateUrl: '../views/detalji-view.html'
 })
 export class SmjestajDetaljiPage {
 
@@ -33,13 +33,18 @@ export class SmjestajDetaljiPage {
   location_lon: number;
   recenzije_db: String[];
   keys: String[];
+  recenzije_show : any;
+  tip = 'smjestaj_detalji';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase, public viewCtrl: ViewController,
               private launchNavigator: LaunchNavigator, private geolocation: Geolocation, public auth: AngularFireAuth) {
 
+    this.recenzije_show = 1;
     this.id = navParams.get('id');
 
+
     this.smjestaj = db.object('/smjestaj_detalji/' + this.id).valueChanges().subscribe((data) => {
+
         this.adresa = data['adresa'];
         this.kontakt_email = data['kontakt_email'];
         this.kontakt_mobitel = data['kontakt_mobitel'];
@@ -105,6 +110,7 @@ export class SmjestajDetaljiPage {
 
   open_galerija(id, child_node_baza)
   {
+    alert(child_node_baza);
     this.navCtrl.push('GalerijaPage', {id: id, tip: child_node_baza});
   }
 

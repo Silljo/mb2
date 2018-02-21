@@ -22,20 +22,11 @@ export class GalerijaPage {
     this.id = navParams.get('id');
     this.tip = navParams.get('tip');
 
-    /*
-    this.id = 1;
-    this.tip = 'smjestaj_detalji';*/
-
     //Ajmo po slike
     db.object("/" + this.tip + "/" + this.id + "/galerija_slike").valueChanges().subscribe((data_slike) => {
         this.slike = data_slike;
         console.log(data_slike);
     });
-
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad GalerijaPage');
   }
 
   close_galery()

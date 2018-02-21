@@ -51,6 +51,8 @@ $colors: (
 
 );
 
+$crvena: #ED1B2F;
+$bijela: #FFF;
 $roza_boja: #F05C6A;
 $zelena_boja: #27793D;
 $narandjasta_boja: #F7A54B;
@@ -62,8 +64,14 @@ $plava_boja: #0288D1;
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
+$loading-ios-spinner-color: $bijela;
+$loading-ios-background: rgba(0, 0, 0, 0.5);
+$loading-ios-spinner-color: $bijela;
 
-
+$alert-ios-background-color: rgba(0, 0, 0, 0.7);
+$alert-ios-message-text-color: $bijela;
+$alert-ios-button-text-color: $zelena_boja;
+$alert-ios-title-text-color: $crvena;
 
 
 // App Material Design Variables
@@ -76,6 +84,19 @@ $segment-button-md-border-color-activated: rgba(240, 92, 106, 1) !important;
 $text-input-placeholder-color: #ccc;
 
 $spinner-md-crescent-color: $plava_boja;
+
+$loading-md-background: rgba(0, 0, 0, 0.5);
+$loading-md-spinner-color: $bijela;
+$loading-md-text-color: $bijela;
+
+$alert-md-background-color: rgba(0, 0, 0, 0.7);
+$alert-md-message-text-color: $bijela;
+$alert-md-button-text-color: $zelena_boja;
+$alert-md-title-text-color: $crvena;
+
+.alert-title {
+    color: $crvena;
+}
 
 // App Windows Variables
 // --------------------------------------------------

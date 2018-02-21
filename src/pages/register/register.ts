@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ToastController, AlertController, LoadingController } from 'ionic-angular';
 import { User } from "../../models/user";
-import { AngularFireAuth } from "angularfire2/auth";
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../../pages/home/home';
 
@@ -9,33 +8,47 @@ import { HomePage } from '../../pages/home/home';
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
+  styleUrls: ['/login/login.scss']
 })
 export class RegisterPage {
 
   user = {} as User;
   password2 : any;
 
-  constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public events: Events, private toastCtrl: ToastController) {
+  constructor(
+    public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public events: Events, private toastCtrl: ToastController,
+    private alertCtrl: AlertController, public loadingCtrl: LoadingController) {
   }
 
   register(user: User) {
 
     if(user.password == this.password2)
     {
+
+      let loading = this.loadingCtrl.create({
+        content: 'Prijava u tijeku, molim pričekajte...'
+      });
+
       this.auth.register(user.email, user.password).then(
         res => {
           //Dobili smo nešto natrag, i bilo je uspješno
           this.auth.obrada_uspjesnog_logina(res.uid, res.email, res.photoURL, res.displayName).then(res => {
             //Subscribamo ili ne ?
             this.auth.subscribe_topics();
+            loading.dismiss();
             this.navCtrl.setRoot(HomePage);
           });
           //
           //
         }, err => {
           //Došlo je do greške kod logina.
-          this.auth.obrada_neuspjesnog_logina(err);
+          loading.dismiss();
+          let alert = this.alertCtrl.create({
+            title: 'Došlo je do greške prilikom registracije. Pokušajte ponovno',
+            subTitle: 'Greška',
+            buttons: ['OK']
+          });
+          alert.present();
         }
      );
     }
