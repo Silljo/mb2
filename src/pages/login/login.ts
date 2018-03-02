@@ -16,7 +16,9 @@ export class LoginPage {
 
   user = {} as User;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public facebook: Facebook, public events: Events, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public facebook: Facebook,
+              public events: Events, public loadingCtrl: LoadingController)
+  {
 
   }
 
@@ -44,8 +46,6 @@ export class LoginPage {
         this.auth.obrada_neuspjesnog_logina(err);
       }
    );
-
-
   }
 
   register()
@@ -81,7 +81,6 @@ export class LoginPage {
                   }),
                 (error =>   {loading.dismiss(); this.auth.obrada_neuspjesnog_logina(error);})
               );
-
           })
           .catch((error) => {
               loading.dismiss();

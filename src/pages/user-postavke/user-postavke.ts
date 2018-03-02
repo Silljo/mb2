@@ -78,8 +78,6 @@ export class UserPostavkePage {
        this.slika_validation = 'true';
        this.korisnik_slika = this.slika;
 
-
-
        this.auth.authState.subscribe(data => {
          if (data && data.uid) {
 
@@ -95,8 +93,6 @@ export class UserPostavkePage {
 
          }
        });
-
-
 
       }, (err) => {
        // Handle error
@@ -221,9 +217,6 @@ export class UserPostavkePage {
       }
 
     });
-
-
-
   }
 
 }

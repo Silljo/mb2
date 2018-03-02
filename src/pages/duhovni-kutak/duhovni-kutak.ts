@@ -20,29 +20,26 @@ export class DuhovniKutakPage {
   add_notification_reminder(datum, vrijeme, naziv, lokacija, icon)
   {
 
+    var godina = datum.substring(6, 10);
+    var mjesec = datum.substring(3, 5);
+    var dan = datum.substring(0, 2);
+
+    var sati = vrijeme.substring(0, 2);
+    var minute = vrijeme.substring(3, 6);
+
     this.toast_msg = this.toast.create({
-      message: 'Dodali ste podsjetnik',
+      message: "Dodali ste podsjetnik za dan "+datum+", u "+vrijeme+"\n-obavijest ćete primiti sat vremena prije početka događaja",
       position: 'bottom',
-      duration: 2000,
+      duration: 5000,
     });
 
     this.toast_msg.present();
-    //new Date(2017, 10, 27, 15)
-    //alert(datum);
 
-    var godina = datum.substring(6, 10).replace(0, '');
-    var mjesec = datum.substring(3, 5).replace(0, '');
-    var dan = datum.substring(0, 2).replace(0, '');
-
-    var sati = vrijeme.substring(0, 2).replace(0, '');
-    var minute = vrijeme.substring(3, 6).replace(0, '');
-
-    //alert(new Date(godina, mjesec-1, dan, sati-1, minute, 0));
     this.local_notifications.schedule({
-      id: 1,
+      id: godina + mjesec + dan + sati + minute,
       title: naziv,
       text: lokacija + ' (' + vrijeme + ' sati)',
-      at: new Date(new Date().getTime() + 3600),
+      at: new Date(godina, mjesec-1, dan, sati, minute, -3600),
       icon: icon
     });
   }

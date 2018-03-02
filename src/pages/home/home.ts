@@ -22,15 +22,11 @@ export class HomePage {
 
   constructor(public db: AngularFireDatabase) {
 
-    this.podaci = this.db.object("/pocetna/").valueChanges().subscribe((data) => {
-      this.slika_pozadina = data['slika_pozadina'];
-    });
-
     this.podaci_vrijeme = this.db.object('/weather/').valueChanges().subscribe((data_vrijeme) => {
 
       this.podaci_vrijeme_data = JSON.parse(data_vrijeme['current'].data);
 
-      this.vrijeme_data_ikona = this.podaci_vrijeme_data.weather[0].icon;
+      this.vrijeme_data_ikona = 'assets/icon/' + this.podaci_vrijeme_data.weather[0].icon + '.svg';
       this.vrijeme_opis = this.podaci_vrijeme_data.weather[0].description.charAt(0).toUpperCase() + this.podaci_vrijeme_data.weather[0].description.slice(1);
       this.vrijeme_temp = this.podaci_vrijeme_data.main.temp;
       this.vrijeme_temp_max = this.podaci_vrijeme_data.main.temp_max;

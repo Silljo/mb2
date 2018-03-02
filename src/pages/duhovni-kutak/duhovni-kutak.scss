@@ -1,5 +1,10 @@
 page-duhovni-kutak {
 
+
+  .toast-message {
+    white-space: pre;
+  }
+
   .timeline timeline-item timeline-time span:last-child {
     color: $crna_boja;
   }

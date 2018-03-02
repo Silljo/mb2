@@ -8,7 +8,7 @@ import { HomePage } from '../../pages/home/home';
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
-  styleUrls: ['/login/login.scss']
+  styleUrls: ['../login/login.scss']
 })
 export class RegisterPage {
 

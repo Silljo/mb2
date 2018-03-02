@@ -7,14 +7,14 @@
 </ion-header>
 
 
-<ion-content class="main_content no_padding" [style.background-image]="'url(' + slika_pozadina + ')'">
+<ion-content class="main_content no_padding">
 
   <ion-grid class="grid_danasnji_datum">
     <ion-row class="no_padding">
       <ion-col offset-5 col-6 class="no_padding vrijeme_col_danasnji_datum">
 
         <div class="div_vrijeme_opis">{{vrijeme_opis}}</div>
-        <img src="assets/icon/{{vrijeme_data_ikona}}.svg" class="svg_vrijeme">
+        <img *ngIf="vrijeme_data_ikona != ''" src="{{vrijeme_data_ikona}}" class="svg_vrijeme">
 
         <div class="div_vrijeme_max"><ion-icon name="ios-arrow-round-up" style="font-size: 14px;"></ion-icon><span> {{vrijeme_temp_max}}&#176;</span></div>
         <div class="div_vrijeme_min"><ion-icon pull-down name="ios-arrow-round-down" style="font-size: 14px;"></ion-icon><span> {{vrijeme_temp_min}}&#176;</span></div>

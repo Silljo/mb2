@@ -401,9 +401,6 @@ export class InteraktivnaMapaPage {
                 }
 
               }
-
-
-
       });
 
   }

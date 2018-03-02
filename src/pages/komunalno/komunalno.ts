@@ -25,6 +25,7 @@ export class KomunalnoPage {
   prijave_komunalno_data: Observable<any[]>;
   komunalno_segment: any;
   komunalni_redar = 0;
+  redirect_param_komunalno: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private camera: Camera,
               public db: AngularFireDatabase, public auth: AngularFireAuth, private datePipe: DatePipe, public loadingCtrl: LoadingController,
@@ -38,7 +39,16 @@ export class KomunalnoPage {
     4 - Korisnik je dobio notifikaciju
     */
 
-    this.komunalno_segment = 'prijava';
+    this.redirect_param_komunalno = navParams.get('komunalno_segment_redirect');
+
+    if(this.redirect_param_komunalno)
+    {
+        this.komunalno_segment = 'arhiva';
+    }
+    else
+    {
+        this.komunalno_segment = 'prijava';
+    }
 
     this.komunalno = this.formBuilder.group({
       hitnost: ['niska', Validators.required],
@@ -72,9 +82,6 @@ export class KomunalnoPage {
 
       }
     });
-
-
-
 
   }
 

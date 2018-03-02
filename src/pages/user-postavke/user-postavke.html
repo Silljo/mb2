@@ -12,7 +12,7 @@
 
 <ion-content padding>
 
-  <div class="profile_picture" (click)="slika_user()" [style.background-image]="'url(' + this.korisnik_slika + ')'"></div>
+  <div class="profile_picture" (click)="slika_user()" *ngIf="korisnik_slika" [style.background-image]="'url(' + this.korisnik_slika + ')'"></div>
 
   <br>
 

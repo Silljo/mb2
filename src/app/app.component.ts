@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events } from 'ionic-angular';
+import { Nav, Platform, Events, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
@@ -7,12 +7,12 @@ import { LoginPage } from '../pages/login/login';
 import { DuhovniKutakPage } from '../pages/duhovni-kutak/duhovni-kutak';
 import { DogadjanjaPage } from '../pages/dogadjanja/dogadjanja';
 
-
 import { StreamingMedia } from '@ionic-native/streaming-media';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 import { Firebase } from '@ionic-native/firebase';
+import { ToastController } from 'ionic-angular';
 
 import * as firebase from 'firebase';
 
@@ -39,12 +39,13 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private streamingMedia: StreamingMedia,
               private afAuth: AngularFireAuth, public events: Events,
-              public conn: ConnectivityServiceProvider, private db: AngularFireDatabase, public firebase_plugin: Firebase) {
+              public conn: ConnectivityServiceProvider, private db: AngularFireDatabase, public firebase_plugin: Firebase, public menu: MenuController,
+              public toast: ToastController) {
 
     this.initializeApp();
 
     this.pages = [
-      { title: 'Početna', component: HomePage, icon: 'md-home', icon_color: ''},
+      { title: 'Početna', component: HomePage, icon: 'md-home', icon_color: 'siva'},
       { title: 'Smještaj', component: 'SmjestajPage', icon: 'md-briefcase', icon_color: 'narandjasta'},
       { title: 'Gastro', component: 'GastroPage', icon: 'md-restaurant', icon_color: 'roza'},
       { title: 'Događanja', component: DogadjanjaPage, icon: 'md-list-box', icon_color: 'zelena'},
@@ -56,50 +57,16 @@ export class MyApp {
 
   }
 
-  private subscribeToPushNotificationEvents(): void {
-
-        // Handle token refresh
-        this.firebase_plugin.onTokenRefresh().subscribe(
-            token => {
-                console.log(`The new token is ${token}`);
-                alert("tu sam");
-                //this.saveToken(token);
-            },
-          error => {
-              console.error('Error refreshing token', error);
-          });
-
-        // Handle incoming notifications
-        this.firebase_plugin.onNotificationOpen().subscribe(
-            (notification: NotificationModel) => {
-
-                !notification.tap
-                    ? alert('The user was using the app when the notification arrived...')
-                    : alert('The app was closed when the notification arrived...');
-
-                    alert(notification.title);
-                    alert(notification.body);
-
-                    /*
-                let notificationAlert = this.alertCtrl.create({
-                    title: notification.title,
-                    message: notification.body,
-                    buttons: ['Ok']
-                });
-                notificationAlert.present();*/
-            },
-            error => {
-                console.error('Error getting the notification', error);
-            });
-    }
-
-
   initializeApp() {
     this.platform.ready().then(() => {
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
+
+      setTimeout(() => {
+          this.splashScreen.hide();
+      }, 1000);
 
       this.platform.registerBackButtonAction(() => {
             if(this.nav.canGoBack()){
@@ -108,23 +75,6 @@ export class MyApp {
               //don't do anything
             }
           });
-
-      /*
-      this.firebase_plugin.onNotificationOpen().subscribe(notification => {
-
-        if(notification.modul)
-        {
-          if(notification.modul == 'komunalno')
-          {
-            this.rootPage = KomunalnoPage;
-          }
-            this.redirekcija = true;
-        }
-
-        //alert(JSON.stringify(notification.modul));
-
-      });
-      */
     });
 
     //Ajmo pohraniti sve vezano za korisnika sta bi nam trebalo u nekom trenutku
@@ -155,14 +105,64 @@ export class MyApp {
 
         if(!this.redirekcija)
         {
-            this.splashScreen.hide();
+            this.menu.enable(true);
             this.rootPage = HomePage;
+
+            // Handle incoming notifications
+            this.firebase_plugin.onNotificationOpen().subscribe(
+              (notification: NotificationModel) => {
+
+                  if(!notification.tap)
+                  {
+                    //Kad je aplikacija otvorena dati ćemo korisniku samo alert neki ili toast ovisi kaj će ljepse izgledati
+                    let toast = this.toast.create({
+                      message: notification.body,
+                      position: 'top',
+                      showCloseButton: true,
+                      closeButtonText: 'OK'
+                    });
+
+                    toast.present();
+                  }
+                  else
+                  {
+                    //Kad je aplikacija zatvorena
+                    if(notification['modul'] == 'komunalno')
+                    {
+                        this.nav.setRoot('KomunalnoPage', {komunalno_segment_redirect: 'arhiva'});
+                    }
+                    else if(notification['modul'] == 'dogadjanja')
+                    {
+                      this.nav.setRoot(DogadjanjaPage);
+                    }
+                    else if(notification['modul'] == 'duhovni_kutak')
+                    {
+                      this.nav.setRoot(DuhovniKutakPage);
+                    }
+                    else if(notification['modul'] == 'smjestaj')
+                    {
+                      this.nav.setRoot('SmjestajPage');
+                    }
+                    else if(notification['modul'] == 'gastro')
+                    {
+                      this.nav.setRoot('GastroPage');
+                    }
+                    else if(notification['modul'] == 'atrakcije')
+                    {
+                      this.nav.setRoot('AtrakcijePage');
+                    }
+
+                  }
+              },
+              error => {
+                  console.error('Error getting the notification', error);
+              });
         }
 
       }
       else {
         //Nema nikakvih podataka da je korisnik ulogiran...
-        this.splashScreen.hide();
+        this.menu.enable(false);
         this.rootPage = LoginPage;
       }
     });
@@ -170,13 +170,23 @@ export class MyApp {
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
 
-    if(page.component.name != this.nav.getActive().name)
-    {
+      if(page.component.name == 'HomePage')
+      {
+          this.nav.setRoot(HomePage);
+      }
+      else if(page.component.name == 'DogadjanjaPage')
+      {
+        this.nav.setRoot(DogadjanjaPage);
+      }
+      else if(page.component.name == 'DuhovniKutakPage')
+      {
+        this.nav.setRoot(DuhovniKutakPage);
+      }
+      else
+      {
         this.nav.setRoot(page.component);
-    }
+      }
 
   }
 
@@ -200,13 +210,19 @@ export class MyApp {
     this.streamingMedia.playAudio(audioUrl, options);
   }
 
-  login()
-  {
-    this.nav.setRoot(LoginPage);
-  }
-
   logout()
   {
+    //Ako smo tu onda brisemo korisnikov token
+    this.afAuth.authState.subscribe(data => {
+      //User id i to i token stavljamo na prazno
+      if (data && data.uid)
+      {
+        firebase.database().ref('/user_profiles/' + data.uid).update({
+            logout: true
+          });
+      }
+    });
+
     firebase.auth().signOut().then(function() {
       //Ako se odlogira moramo maknuti korisnikov token
 

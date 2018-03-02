@@ -40,10 +40,6 @@ export class GastroDetaljiPage {
     this.id = navParams.get('id');
     this.tip = navParams.get('tip');
 
-    /*
-    this.tip = 'pice';
-    this.id = 1;*/
-
     if(this.tip == 'hrana')
     {
       this.gastro_detalji = db.object('/gastro_detalji_'+ this.tip +'/' + this.id).valueChanges().subscribe((data) => {

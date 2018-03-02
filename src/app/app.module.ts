@@ -83,7 +83,7 @@ import { DatePipe } from '@angular/common';
     LocalNotifications,
     DatePipe,
     Diagnostic
-    
+
   ]
 })
 export class AppModule {}

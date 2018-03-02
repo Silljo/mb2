@@ -44,7 +44,8 @@ export class AuthProvider {
             subscribe_dogadjanja: 1,
             subscribe_smjestaj: 1,
             subscribe_gastro: 1,
-            subscribe_duhovni_kutak: 1
+            subscribe_duhovni_kutak: 1,
+            logout: false
         });
 
         var user = firebase.auth().currentUser;
@@ -58,6 +59,12 @@ export class AuthProvider {
           // An error happened.
         });
 
+      }
+      else
+      {
+        firebase.database().ref('/user_profiles/' + uid).update({
+            logout: false
+          });
       }
     });
 

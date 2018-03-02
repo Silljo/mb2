@@ -43,7 +43,7 @@
 
             <ion-item>
               <ion-avatar item-start>
-                <img src="{{kultura.slika_avatar}}">
+                <img *ngIf="kultura.slika_avatar != ''" src="{{kultura.slika_avatar}}">
               </ion-avatar>
               <h2>{{kultura.naziv}}</h2>
               <p>{{kultura.lokacija}}</p>
@@ -71,7 +71,7 @@
 
             <ion-item>
               <ion-avatar item-start>
-                <img src="{{sport.slika_avatar}}">
+                <img *ngIf="sport.slika_avatar != ''" src="{{sport.slika_avatar}}">
               </ion-avatar>
               <h2>{{sport.naziv}}</h2>
               <p>{{sport.lokacija}}</p>
@@ -98,14 +98,14 @@
 
             <ion-item>
               <ion-avatar item-start>
-                <img src="{{zabava.slika_avatar}}">
+                <img *ngIf="zabava.slika_avatar != ''" src="{{zabava.slika_avatar}}">
               </ion-avatar>
               <h2>{{zabava.naziv}}</h2>
               <p>{{zabava.lokacija}}</p>
               <ion-icon name="notifications" color="zelena" item-right (click)="add_notification_reminder(zabava.datum, zabava.vrijeme, zabava.naziv, zabava.lokacija, zabava.slika_avatar)"></ion-icon>
             </ion-item>
 
-            <div *ngIf="zabava.slika"><img src="{{zabava.slika}}"></div>
+            <div *ngIf="zabava.slika" ><img src="{{zabava.slika}}"></div>
 
             <ion-card-content>
               {{zabava.opis}}

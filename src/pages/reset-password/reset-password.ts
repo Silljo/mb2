@@ -9,7 +9,7 @@ import { LoginPage } from '../../pages/login/login';
 @Component({
   selector: 'page-reset-password',
   templateUrl: 'reset-password.html',
-  styleUrls: ['/login/login.scss']
+  styleUrls: ['../login/login.scss']
 })
 export class ResetPasswordPage {
 
@@ -38,9 +38,7 @@ export class ResetPasswordPage {
     var auth = firebase.auth();
     return auth.sendPasswordResetEmail(user.email).then(
         () =>
-
         alert.present()
-
         )
       .catch(
         (error) => this.auth.obrada_neuspjesnog_logina(error))

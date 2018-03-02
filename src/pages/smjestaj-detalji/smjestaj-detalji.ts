@@ -42,7 +42,6 @@ export class SmjestajDetaljiPage {
     this.recenzije_show = 1;
     this.id = navParams.get('id');
 
-
     this.smjestaj = db.object('/smjestaj_detalji/' + this.id).valueChanges().subscribe((data) => {
 
         this.adresa = data['adresa'];
@@ -66,10 +65,7 @@ export class SmjestajDetaljiPage {
             this.recenzije_db = data['recenzije'];
             this.keys = Object.keys(this.recenzije_db);
         }
-
     });
-
-
   }
 
   ionViewDidLoad() {
@@ -110,7 +106,6 @@ export class SmjestajDetaljiPage {
 
   open_galerija(id, child_node_baza)
   {
-    alert(child_node_baza);
     this.navCtrl.push('GalerijaPage', {id: id, tip: child_node_baza});
   }
 
@@ -131,9 +126,6 @@ export class SmjestajDetaljiPage {
           }
         });
     }
-
-
-
   }
 
 

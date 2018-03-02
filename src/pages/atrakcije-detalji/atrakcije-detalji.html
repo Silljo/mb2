@@ -3,7 +3,7 @@
   <!-- [style.background-image]="'url(' + slika + ')'" -->
   <ion-icon class="icon_back" name="ios-arrow-back" (click) = "close_pop();"></ion-icon>
 
-  <div class="wraper_div_main" [style.background-image]="'url(' + atrakcija_slika_main + ')'">
+  <div class="wraper_div_main"  *ngIf="atrakcija_slika_main" [style.background-image]="'url(' + atrakcija_slika_main + ')'">
 
     <div class="inner_div">
 
@@ -33,7 +33,7 @@
 
   <ion-card>
     <ion-card-header><ion-icon class="info_icon" name="ios-information-circle"></ion-icon> Osnovne informacije </ion-card-header>
-    <ion-card-content>{{atrakcija_opis}}</ion-card-content>
+    <ion-card-content>{{atrakcija_opis}}<br></ion-card-content>
   </ion-card>
 
 </ion-content>

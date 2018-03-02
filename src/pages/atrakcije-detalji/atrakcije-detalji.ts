@@ -31,7 +31,6 @@ export class AtrakcijeDetaljiPage {
       this.atrakcija_slika_main = data['slika_main'];
     });
 
-
   }
 
   close_pop()
