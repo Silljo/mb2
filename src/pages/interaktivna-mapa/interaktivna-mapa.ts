@@ -41,7 +41,7 @@ export class InteraktivnaMapaPage {
 
   constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public db: AngularFireDatabase, public loadingCtrl: LoadingController,public events: Events,
               private diagnostic: Diagnostic, private alertCtrl: AlertController) {
-                alert("tu sam");
+
     db.object("/interaktivna_mapa/").valueChanges().subscribe((data_opcenito) => {
       this.interaktivna_mapa_opcenito = data_opcenito;
     });
