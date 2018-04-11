@@ -122,6 +122,7 @@ export class InteraktivnaMapaPage {
     this.mapElement = document.getElementById('map');
     this.map = this.googleMaps.create(this.mapElement);
 
+    /*
     let loading = this.loadingCtrl.create({
       content: 'Dohvaćam sadržaj, molim pričekajte (brzina učitavanja sadržaja ovisi o brzini pristupa mreži)...',
       duration: 50000
@@ -132,7 +133,7 @@ export class InteraktivnaMapaPage {
     this.events.subscribe('test', () => {
       if(loading){ loading.dismiss(); loading = null; }
     });
-
+    */
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY).then((obj) => {
 

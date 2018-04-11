@@ -1,18 +1,13 @@
 page-interaktivna-mapa {
 
-  ion-header {
-  .toolbar {
-    z-index: 99999;
-    position: absolute;
+  .platform-ios .navbar_small_subtitle
+  {
+    color: #000;
+  }
 
-      .toolbar-background {
-        background: transparent;
-
-      }
-      .toolbar-title {
-        color: #FFF;
-      }
-    }
+  .navbar_small_subtitle
+  {
+    color: #000 !important;
   }
 
   .scroll {

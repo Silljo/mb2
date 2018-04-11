@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, IonicPage, ToastController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, IonicPage, ToastController, normalizeURL } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as firebase from 'firebase';
@@ -167,7 +167,7 @@ export class KomunalnoPage {
       await this.camera.getPicture(options).then((imageData) => {
        // imageData is either a base64 encoded string or a file URI
        // If it's base64:
-       let base64Image = 'data:image/jpeg;base64,' + imageData;
+       let base64Image = normalizeURL('data:image/jpeg;base64,' + imageData);
        this.slika = base64Image;
        this.slika_validation = 'true';
 

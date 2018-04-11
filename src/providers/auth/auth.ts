@@ -31,7 +31,7 @@ export class AuthProvider {
 
       //Ako ne postoji e onda ga spremamo
       if (!dataSnapshot.hasChild(uid)) {
-
+        
         if(naziv == null){naziv = email.split("@")[0];}
         if(photo == null || photo == ''){photo = 'https://firebasestorage.googleapis.com/v0/b/mbistrica-c5bd3.appspot.com/o/mblogo.png?alt=media&token=32a7650c-7a01-4b51-965a-7e6c17e7fcb9';}
 

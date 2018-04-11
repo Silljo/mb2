@@ -58,7 +58,7 @@
           <ion-icon name="md-call"></ion-icon>
           Tel
         </a>
-        <a class="kontakt_link" *ngIf="kontakt_mobitel != ''" href="tel:{{kontakt_telefon}}" ion-button color="crna">
+        <a class="kontakt_link" *ngIf="kontakt_mobitel != ''" href="tel:{{kontakt_mobitel}}" ion-button color="crna">
           <ion-icon name="ios-phone-portrait"></ion-icon>
           Mob
         </a>
@@ -94,6 +94,16 @@
   <ion-card>
     <ion-card-header><ion-icon class="info_icon" name="ios-information-circle"></ion-icon> Osnovne informacije </ion-card-header>
     <ion-card-content>{{opis}}<br><br></ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="rezervacije">
+    <ion-card-header class="card_recenzija"><ion-icon class="rezerviranje_icon" color="crvena" name="md-briefcase"></ion-icon> Rezervirani termini </ion-card-header>
+    <ion-list>
+      <ion-item text-wrap *ngFor="let rezervacija of rezervacije">
+          <ion-icon item-left class="ikona_rezervacija" md="md-calendar"></ion-icon>
+        <h4>{{rezervacija}}</h4>
+      </ion-item>
+    </ion-list>
   </ion-card>
 
   <!-- Ako imamo flag recenzije_show TRUE onda se prikazuju recenzije -->

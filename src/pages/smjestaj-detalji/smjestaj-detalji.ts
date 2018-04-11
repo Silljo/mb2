@@ -34,6 +34,7 @@ export class SmjestajDetaljiPage {
   recenzije_db: String[];
   keys: String[];
   recenzije_show : any;
+  rezervacije : Array<any>;
   tip = 'smjestaj_detalji';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase, public viewCtrl: ViewController,
@@ -59,12 +60,14 @@ export class SmjestajDetaljiPage {
         this.radno_vrijeme_sati = data['radno_vrijeme_sati'];
         this.location_lat = data['location_lat'];
         this.location_lon = data['location_lon'];
-
+        this.rezervacije = data['rezervacije'];
+        
         if(data['recenzije'])
         {
             this.recenzije_db = data['recenzije'];
             this.keys = Object.keys(this.recenzije_db);
         }
+
     });
   }
 
