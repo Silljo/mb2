@@ -88,7 +88,10 @@
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
       "cordova-plugin-geolocation": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-camera": {},
+      "cordova-plugin-camera": {
+        "CAMERA_USAGE_DESCRIPTION": " ",
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+      },
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "AIzaSyAQl2ZWgXTMydXdtRZuGMdjyw07pKv02Vc",
         "API_KEY_FOR_IOS": "AIzaSyA94aPEJXN0iof_xYzqPlMbewvsEbZNdxw"

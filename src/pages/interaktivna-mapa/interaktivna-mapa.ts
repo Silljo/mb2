@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, Events, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, Events, AlertController, Platform } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent } from '@ionic-native/google-maps';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Diagnostic } from '@ionic-native/diagnostic';
@@ -40,7 +40,7 @@ export class InteraktivnaMapaPage {
   markers_atrakcije_checkbox: boolean = true;
 
   constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public db: AngularFireDatabase, public loadingCtrl: LoadingController,public events: Events,
-              private diagnostic: Diagnostic, private alertCtrl: AlertController) {
+              private diagnostic: Diagnostic, private alertCtrl: AlertController, public plt: Platform) {
 
     db.object("/interaktivna_mapa/").valueChanges().subscribe((data_opcenito) => {
       this.interaktivna_mapa_opcenito = data_opcenito;
@@ -97,24 +97,34 @@ export class InteraktivnaMapaPage {
       ]
     });
 
-    this.diagnostic.requestLocationAuthorization().then((status) => {
+    //Ako imamo ios onda se loada mapa svikak
+    if(this.plt.is('ios'))
+    {
+      this.loadMap();
+    }
 
-      switch(status){
-       case this.diagnostic.permissionStatus.NOT_REQUESTED:
-            alert.present();
-           break;
-       case this.diagnostic.permissionStatus.DENIED:
-           alert.present();
-           break;
-       case this.diagnostic.permissionStatus.GRANTED:
-            this.loadMap();
-           break;
-       case this.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
-            alert.present();
-           break;
-        }
+    if(this.plt.is('android'))
+    {
+      this.diagnostic.requestLocationAuthorization().then((status) => {
 
-    }).catch(e => console.log(e));
+        switch(status){
+         case this.diagnostic.permissionStatus.NOT_REQUESTED:
+              alert.present();
+             break;
+         case this.diagnostic.permissionStatus.DENIED:
+             alert.present();
+             break;
+         case this.diagnostic.permissionStatus.GRANTED:
+              this.loadMap();
+             break;
+         case this.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
+              alert.present();
+             break;
+          }
+
+      }).catch(e => console.log(e));
+
+    }
 
   }
 
@@ -122,7 +132,7 @@ export class InteraktivnaMapaPage {
     this.mapElement = document.getElementById('map');
     this.map = this.googleMaps.create(this.mapElement);
 
-    /*
+
     let loading = this.loadingCtrl.create({
       content: 'Dohvaćam sadržaj, molim pričekajte (brzina učitavanja sadržaja ovisi o brzini pristupa mreži)...',
       duration: 50000
@@ -133,7 +143,7 @@ export class InteraktivnaMapaPage {
     this.events.subscribe('test', () => {
       if(loading){ loading.dismiss(); loading = null; }
     });
-    */
+    
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY).then((obj) => {
 

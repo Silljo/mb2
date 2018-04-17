@@ -89,6 +89,11 @@ export class MyApp {
             this.user_img = data_user['slika'];
             this.email = data_user['email'];
 
+            if(this.platform.is('ios'))
+            {
+                this.firebase_plugin.grantPermission();
+            }
+
             //Kad smo sigurni da je sve u bazi onda i updejtamo token men
             this.firebase_plugin.getToken().then(token_firebase => {
 

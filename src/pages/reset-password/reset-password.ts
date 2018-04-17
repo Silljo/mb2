@@ -8,8 +8,7 @@ import { LoginPage } from '../../pages/login/login';
 @IonicPage()
 @Component({
   selector: 'page-reset-password',
-  templateUrl: 'reset-password.html',
-  styleUrls: ['../login/login.scss']
+  templateUrl: 'reset-password.html'
 })
 export class ResetPasswordPage {
 

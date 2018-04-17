@@ -7,8 +7,7 @@ import { HomePage } from '../../pages/home/home';
 @IonicPage()
 @Component({
   selector: 'page-register',
-  templateUrl: 'register.html',
-  styleUrls: ['../login/login.scss']
+  templateUrl: 'register.html'
 })
 export class RegisterPage {
 

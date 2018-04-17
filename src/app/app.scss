@@ -54,9 +54,12 @@ $maslinasta_komp: #6D9530;
 
 .md .menu-inner {
     background: transparent;
-
     background-color: rgba(34,87,100, 0.8);
-    //background-color: $zelena_boja;
+}
+
+.ios .menu-inner{
+  background: transparent;
+  background-color: rgba(34,87,100, 0.8);
 }
 
 .div_user_photo_izbornik
@@ -158,6 +161,10 @@ ion-menu{
 .icon_back
 {
   color: rgba(254,254,254, 0.8) !important;
+  background-color: rgba(0,0,0, 0.2);
+  border-bottom-right-radius: 1em;
+  border-top-right-radius: 1em;
+  margin-top: 0.5em;
 }
 
 page-atrakcije-detalji, page-gastro-detalji, page-smjestaj-detalji{
